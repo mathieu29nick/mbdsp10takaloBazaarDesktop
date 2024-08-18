@@ -2,15 +2,8 @@
 {
     partial class frmMain
     {
-        /// <summary>
-        ///  Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        ///  Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -22,15 +15,12 @@
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        ///  Required method for Designer support - do not modify
-        ///  the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             pnlLeft = new Panel();
             btnHelp = new Button();
+            btnCategories = new Button();
             btnSettings = new Button();
             btn5 = new Button();
             btn4 = new Button();
@@ -44,6 +34,7 @@
             btnLogoSmall = new Button();
             panel2 = new Panel();
             btnMenuBar = new Button();
+            pnlCategories = new Panel();
             statusStrip1 = new StatusStrip();
             toolStripStatusLabel1 = new ToolStripStatusLabel();
             pnlLeft.SuspendLayout();
@@ -52,12 +43,14 @@
             panel2.SuspendLayout();
             statusStrip1.SuspendLayout();
             SuspendLayout();
+
             // 
             // pnlLeft
             // 
             pnlLeft.AutoScroll = true;
             pnlLeft.BackColor = Color.FromArgb(73, 78, 83);
             pnlLeft.Controls.Add(btnHelp);
+            pnlLeft.Controls.Add(btnCategories);
             pnlLeft.Controls.Add(btnSettings);
             pnlLeft.Controls.Add(btn5);
             pnlLeft.Controls.Add(btn4);
@@ -72,6 +65,7 @@
             pnlLeft.Name = "pnlLeft";
             pnlLeft.Size = new Size(310, 1143);
             pnlLeft.TabIndex = 0;
+
             // 
             // btnHelp
             // 
@@ -81,7 +75,7 @@
             btnHelp.ForeColor = Color.White;
             btnHelp.Image = (Image)resources.GetObject("btnHelp.Image");
             btnHelp.ImageAlign = ContentAlignment.MiddleLeft;
-            btnHelp.Location = new Point(0, 619);
+            btnHelp.Location = new Point(0, 549);
             btnHelp.Name = "btnHelp";
             btnHelp.Padding = new Padding(20, 0, 0, 0);
             btnHelp.Size = new Size(310, 70);
@@ -90,6 +84,44 @@
             btnHelp.Text = "          Help";
             btnHelp.TextAlign = ContentAlignment.MiddleLeft;
             btnHelp.UseVisualStyleBackColor = true;
+
+            // 
+            // btnCategories
+            // 
+            btnCategories.Dock = DockStyle.Top;
+            btnCategories.FlatAppearance.BorderSize = 0;
+            btnCategories.FlatStyle = FlatStyle.Flat;
+            btnCategories.ForeColor = Color.White;
+            btnCategories.Image = (Image)resources.GetObject("btnHelp.Image"); 
+            btnCategories.ImageAlign = ContentAlignment.MiddleLeft;
+            btnCategories.Location = new Point(0, 619);
+            btnCategories.Name = "btnCategories";
+            btnCategories.Padding = new Padding(20, 0, 0, 0);
+            btnCategories.Size = new Size(310, 70);
+            btnCategories.TabIndex = 2;
+            btnCategories.Tag = "          Catégories";
+            btnCategories.Text = "          Catégories";
+            btnCategories.TextAlign = ContentAlignment.MiddleLeft;
+            btnCategories.UseVisualStyleBackColor = true;
+            btnCategories.Click += new EventHandler(this.btnCategories_Click);
+
+            // 
+            // pnlCategories
+            // 
+            pnlCategories.Dock = DockStyle.Fill;
+            pnlCategories.BackColor = Color.FromArgb(244, 246, 249);
+            pnlCategories.Location = new Point(310, 70);
+            pnlCategories.Name = "pnlCategories";
+            pnlCategories.Size = new Size(1624, 1073);
+            pnlCategories.TabIndex = 2;
+            pnlCategories.Visible = false;
+
+            ListBox listBoxCategories = new ListBox();
+            listBoxCategories.Dock = DockStyle.Fill;
+            listBoxCategories.BackColor = Color.White;
+            listBoxCategories.ForeColor = Color.Black;
+            pnlCategories.Controls.Add(listBoxCategories);
+
             // 
             // btnSettings
             // 
@@ -99,7 +131,7 @@
             btnSettings.ForeColor = Color.White;
             btnSettings.Image = (Image)resources.GetObject("btnSettings.Image");
             btnSettings.ImageAlign = ContentAlignment.MiddleLeft;
-            btnSettings.Location = new Point(0, 549);
+            btnSettings.Location = new Point(0, 479);
             btnSettings.Name = "btnSettings";
             btnSettings.Padding = new Padding(20, 0, 0, 0);
             btnSettings.Size = new Size(310, 70);
@@ -108,6 +140,7 @@
             btnSettings.Text = "          Settings";
             btnSettings.TextAlign = ContentAlignment.MiddleLeft;
             btnSettings.UseVisualStyleBackColor = true;
+
             // 
             // btn5
             // 
@@ -117,7 +150,7 @@
             btn5.ForeColor = Color.White;
             btn5.Image = (Image)resources.GetObject("btn5.Image");
             btn5.ImageAlign = ContentAlignment.MiddleLeft;
-            btn5.Location = new Point(0, 479);
+            btn5.Location = new Point(0, 409);
             btn5.Name = "btn5";
             btn5.Padding = new Padding(20, 0, 0, 0);
             btn5.Size = new Size(310, 70);
@@ -126,6 +159,7 @@
             btn5.Text = "          Button 5";
             btn5.TextAlign = ContentAlignment.MiddleLeft;
             btn5.UseVisualStyleBackColor = true;
+
             // 
             // btn4
             // 
@@ -135,7 +169,7 @@
             btn4.ForeColor = Color.White;
             btn4.Image = (Image)resources.GetObject("btn4.Image");
             btn4.ImageAlign = ContentAlignment.MiddleLeft;
-            btn4.Location = new Point(0, 409);
+            btn4.Location = new Point(0, 339);
             btn4.Name = "btn4";
             btn4.Padding = new Padding(20, 0, 0, 0);
             btn4.Size = new Size(310, 70);
@@ -144,6 +178,7 @@
             btn4.Text = "          Button 4";
             btn4.TextAlign = ContentAlignment.MiddleLeft;
             btn4.UseVisualStyleBackColor = true;
+
             // 
             // btn3
             // 
@@ -153,7 +188,7 @@
             btn3.ForeColor = Color.White;
             btn3.Image = (Image)resources.GetObject("btn3.Image");
             btn3.ImageAlign = ContentAlignment.MiddleLeft;
-            btn3.Location = new Point(0, 339);
+            btn3.Location = new Point(0, 269);
             btn3.Name = "btn3";
             btn3.Padding = new Padding(20, 0, 0, 0);
             btn3.Size = new Size(310, 70);
@@ -162,6 +197,7 @@
             btn3.Text = "          Button 3";
             btn3.TextAlign = ContentAlignment.MiddleLeft;
             btn3.UseVisualStyleBackColor = true;
+
             // 
             // btn2
             // 
@@ -171,7 +207,7 @@
             btn2.ForeColor = Color.White;
             btn2.Image = (Image)resources.GetObject("btn2.Image");
             btn2.ImageAlign = ContentAlignment.MiddleLeft;
-            btn2.Location = new Point(0, 269);
+            btn2.Location = new Point(0, 199);
             btn2.Name = "btn2";
             btn2.Padding = new Padding(20, 0, 0, 0);
             btn2.Size = new Size(310, 70);
@@ -180,6 +216,7 @@
             btn2.Text = "          Button 2";
             btn2.TextAlign = ContentAlignment.MiddleLeft;
             btn2.UseVisualStyleBackColor = true;
+
             // 
             // btn1
             // 
@@ -189,7 +226,7 @@
             btn1.ForeColor = Color.White;
             btn1.Image = (Image)resources.GetObject("btn1.Image");
             btn1.ImageAlign = ContentAlignment.MiddleLeft;
-            btn1.Location = new Point(0, 199);
+            btn1.Location = new Point(0, 129);
             btn1.Name = "btn1";
             btn1.Padding = new Padding(20, 0, 0, 0);
             btn1.Size = new Size(310, 70);
@@ -198,6 +235,7 @@
             btn1.Text = "          Button 1";
             btn1.TextAlign = ContentAlignment.MiddleLeft;
             btn1.UseVisualStyleBackColor = true;
+
             // 
             // btnHome
             // 
@@ -207,7 +245,7 @@
             btnHome.ForeColor = Color.White;
             btnHome.Image = (Image)resources.GetObject("btnHome.Image");
             btnHome.ImageAlign = ContentAlignment.MiddleLeft;
-            btnHome.Location = new Point(0, 129);
+            btnHome.Location = new Point(0, 59);
             btnHome.Name = "btnHome";
             btnHome.Padding = new Padding(20, 0, 0, 0);
             btnHome.Size = new Size(310, 70);
@@ -216,6 +254,7 @@
             btnHome.Text = "          Home";
             btnHome.TextAlign = ContentAlignment.MiddleLeft;
             btnHome.UseVisualStyleBackColor = true;
+
             // 
             // pnlSearch
             // 
@@ -228,6 +267,7 @@
             pnlSearch.Padding = new Padding(10);
             pnlSearch.Size = new Size(310, 59);
             pnlSearch.TabIndex = 3;
+
             // 
             // tbSearch
             // 
@@ -237,6 +277,7 @@
             tbSearch.Size = new Size(290, 39);
             tbSearch.TabIndex = 4;
             tbSearch.TextChanged += tbSearch_TextChanged;
+
             // 
             // panel3
             // 
@@ -247,6 +288,7 @@
             panel3.Name = "panel3";
             panel3.Size = new Size(310, 70);
             panel3.TabIndex = 0;
+
             // 
             // btnLogoSmall
             // 
@@ -263,6 +305,7 @@
             btnLogoSmall.Tag = "ADMIN";
             btnLogoSmall.Text = "ADMIN";
             btnLogoSmall.UseVisualStyleBackColor = true;
+
             // 
             // panel2
             // 
@@ -273,6 +316,7 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(1624, 70);
             panel2.TabIndex = 1;
+
             // 
             // btnMenuBar
             // 
@@ -286,6 +330,7 @@
             btnMenuBar.TabIndex = 0;
             btnMenuBar.UseVisualStyleBackColor = true;
             btnMenuBar.Click += btnMenuBar_Click;
+
             // 
             // statusStrip1
             // 
@@ -296,12 +341,14 @@
             statusStrip1.Size = new Size(1934, 42);
             statusStrip1.TabIndex = 2;
             statusStrip1.Text = "statusStrip1";
+
             // 
             // toolStripStatusLabel1
             // 
             toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             toolStripStatusLabel1.Size = new Size(78, 32);
             toolStripStatusLabel1.Text = "Ready";
+
             // 
             // frmMain
             // 
@@ -310,6 +357,7 @@
             BackColor = Color.FromArgb(244, 246, 249);
             ClientSize = new Size(1934, 1185);
             Controls.Add(panel2);
+            Controls.Add(pnlCategories);
             Controls.Add(pnlLeft);
             Controls.Add(statusStrip1);
             DoubleBuffered = true;
@@ -348,5 +396,24 @@
         private Button btn1;
         private Custom_Controls.RoundTB tbSearch;
         private Panel pnlSearch;
+        private Button btnCategories;
+        private Panel pnlCategories;
+
+        // btnCategories_Click
+        private async void btnCategories_Click(object sender, EventArgs e)
+        {
+            pnlCategories.Visible = true;
+            pnlSearch.Visible = false;
+
+            var categoryService = new WinFormsApp.Services.CategoryService();
+            List<WinFormsApp.Models.Category> categories = await categoryService.GetCategoriesAsync();
+
+            ListBox listBoxCategories = (ListBox)pnlCategories.Controls[0];
+            listBoxCategories.Items.Clear();
+            foreach (var category in categories)
+            {
+                listBoxCategories.Items.Add(category.Name);
+            }
+        }
     }
 }
