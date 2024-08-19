@@ -3,6 +3,7 @@
     partial class frmMain
     {
         private System.ComponentModel.IContainer components = null;
+        private WinFormsApp.UI.ObjectListManager _objectListManager;
 
         protected override void Dispose(bool disposing)
         {
@@ -27,8 +28,10 @@
             btn3 = new Button();
             btn2 = new Button();
             btn1 = new Button();
+            btnObject = new Button();
             btnHome = new Button();
             pnlSearch = new Panel();
+            pnlObjects = new Panel();
             tbSearch = new Custom_Controls.RoundTB();
             panel3 = new Panel();
             btnLogoSmall = new Button();
@@ -51,6 +54,7 @@
             pnlLeft.BackColor = Color.FromArgb(73, 78, 83);
             pnlLeft.Controls.Add(btnHelp);
             pnlLeft.Controls.Add(btnCategories);
+            pnlLeft.Controls.Add(btnObject);
             pnlLeft.Controls.Add(btnSettings);
             pnlLeft.Controls.Add(btn5);
             pnlLeft.Controls.Add(btn4);
@@ -92,7 +96,7 @@
             btnCategories.FlatAppearance.BorderSize = 0;
             btnCategories.FlatStyle = FlatStyle.Flat;
             btnCategories.ForeColor = Color.White;
-            btnCategories.Image = (Image)resources.GetObject("btnHelp.Image"); 
+            btnCategories.Image = (Image)resources.GetObject("btnHelp.Image");
             btnCategories.ImageAlign = ContentAlignment.MiddleLeft;
             btnCategories.Location = new Point(0, 619);
             btnCategories.Name = "btnCategories";
@@ -121,6 +125,40 @@
             listBoxCategories.BackColor = Color.White;
             listBoxCategories.ForeColor = Color.Black;
             pnlCategories.Controls.Add(listBoxCategories);
+
+
+            // 
+            // btnObject
+            // 
+            btnObject.Dock = DockStyle.Top;
+            btnObject.FlatAppearance.BorderSize = 0;
+            btnObject.FlatStyle = FlatStyle.Flat;
+            btnObject.ForeColor = Color.White;
+            btnObject.Image = (Image)resources.GetObject("btnHelp.Image");
+            btnObject.ImageAlign = ContentAlignment.MiddleLeft;
+            btnObject.Location = new Point(0, 689);
+            btnObject.Name = "btnObject";
+            btnObject.Padding = new Padding(20, 0, 0, 0);
+            btnObject.Size = new Size(310, 70);
+            btnObject.TabIndex = 2;
+            btnObject.Tag = "          Liste Objet";
+            btnObject.Text = "          Liste Objet";
+            btnObject.TextAlign = ContentAlignment.MiddleLeft;
+            btnObject.UseVisualStyleBackColor = true;
+            btnObject.Click += new EventHandler(this.btnObject_Click);
+
+            // 
+            // pnlObjects
+            // 
+            pnlObjects.Dock = DockStyle.Fill;
+            pnlObjects.BackColor = Color.FromArgb(244, 246, 249);
+            pnlObjects.Location = new Point(950, 950);
+            pnlObjects.Name = "pnlObjects";
+            pnlObjects.Size = new Size(1624, 1073);
+            pnlObjects.TabIndex = 3;
+            pnlObjects.Visible = false;
+
+            _objectListManager = new WinFormsApp.UI.ObjectListManager(pnlObjects);
 
             // 
             // btnSettings
@@ -357,6 +395,7 @@
             BackColor = Color.FromArgb(244, 246, 249);
             ClientSize = new Size(1934, 1185);
             Controls.Add(panel2);
+            Controls.Add(pnlObjects);
             Controls.Add(pnlCategories);
             Controls.Add(pnlLeft);
             Controls.Add(statusStrip1);
@@ -398,11 +437,13 @@
         private Panel pnlSearch;
         private Button btnCategories;
         private Panel pnlCategories;
+        private Button btnObject;
+        private Panel pnlObjects;
 
-        // btnCategories_Click
         private async void btnCategories_Click(object sender, EventArgs e)
         {
             pnlCategories.Visible = true;
+            pnlObjects.Visible = false; 
             pnlSearch.Visible = false;
 
             var categoryService = new WinFormsApp.Services.CategoryService();
@@ -414,6 +455,15 @@
             {
                 listBoxCategories.Items.Add(category.Name);
             }
+        }
+
+        // Liste des Objets
+        private async void btnObject_Click(object sender, EventArgs e)
+        {
+            pnlObjects.Visible = true;
+            pnlCategories.Visible = false;
+            pnlSearch.Visible = true;
+            await _objectListManager.LoadObjectsAsync();
         }
     }
 }
