@@ -19,5 +19,8 @@ namespace WinFormsApp.Models
         public int UserId { get; set; }
         public int CategoryId { get; set; }
         public DateTime? DeletedAt { get; set; }
+
+        public string CategoryName { get; set; }
+        public Category Category { get; set; }
     }
 }

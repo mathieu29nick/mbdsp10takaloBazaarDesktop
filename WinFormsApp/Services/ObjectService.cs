@@ -33,9 +33,11 @@ namespace WinFormsApp.Services
                     url += $"&user_id={userId}";
 
                 if (categoryId.HasValue)
-                    url += $"&category_id={categoryId}";
+                    if(categoryId==-1) url += $"&category_id=";
+                    else url += $"&category_id={categoryId}";
 
                 if (!string.IsNullOrEmpty(status))
+                    MessageBox.Show($"ATO: {status}");
                     url += $"&status={status}";
 
                 HttpResponseMessage response = await _httpClient.GetAsync(url);
@@ -47,6 +49,14 @@ namespace WinFormsApp.Services
                 {
                     PropertyNameCaseInsensitive = true
                 });
+
+                if (responseData != null && responseData.Data != null)
+                {
+                    foreach (var obj in responseData.Data.Objects)
+                    {
+                        obj.CategoryName = obj.Category?.Name;
+                    }
+                }
 
                 return responseData?.Data?.Objects ?? new List<Models.Object>();
             }
