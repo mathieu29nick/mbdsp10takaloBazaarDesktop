@@ -443,18 +443,14 @@
         private async void btnCategories_Click(object sender, EventArgs e)
         {
             pnlCategories.Visible = true;
-            pnlObjects.Visible = false; 
+            pnlObjects.Visible = false;
             pnlSearch.Visible = false;
 
-            var categoryService = new WinFormsApp.Services.CategoryService();
-            List<WinFormsApp.Models.Category> categories = await categoryService.GetCategoriesAsync();
+            pnlCategories.Controls.Clear();
 
-            ListBox listBoxCategories = (ListBox)pnlCategories.Controls[0];
-            listBoxCategories.Items.Clear();
-            foreach (var category in categories)
-            {
-                listBoxCategories.Items.Add(category.Name);
-            }
+            var categoryListControl = new WinFormsApp.UI.CategoryListControl();
+            categoryListControl.Dock = DockStyle.Fill;
+            pnlCategories.Controls.Add(categoryListControl);
         }
 
         // Liste des Objets
