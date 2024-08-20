@@ -9,5 +9,14 @@ namespace WinFormsApp.Models.ApiResponse
     [Serializable]
     public class TypeReportResponse
     {
+        public TypeReportsData Data { get; set; }
+
+        [Serializable]
+        public class TypeReportsData
+        {
+            public List<TypeReport> TypeReports { get; set; }
+            public int? TotalPages { get; set; }
+            public int? CurrentPage { get; set; }
+        }
     }
 }

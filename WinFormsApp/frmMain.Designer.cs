@@ -4,6 +4,7 @@
     {
         private System.ComponentModel.IContainer components = null;
         private WinFormsApp.UI.ObjectListManager _objectListManager;
+        private WinFormsApp.UI.TypeReportListScreen _typeReportListManager;
 
         protected override void Dispose(bool disposing)
         {
@@ -20,7 +21,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             pnlLeft = new Panel();
-            btnHelp = new Button();
+            btnTypeReport = new Button();
             btnCategories = new Button();
             btnSettings = new Button();
             btn5 = new Button();
@@ -32,6 +33,7 @@
             btnHome = new Button();
             pnlSearch = new Panel();
             pnlObjects = new Panel();
+            pnlTypeReport = new Panel();
             tbSearch = new Custom_Controls.RoundTB();
             panel3 = new Panel();
             btnLogoSmall = new Button();
@@ -52,7 +54,7 @@
             // 
             pnlLeft.AutoScroll = true;
             pnlLeft.BackColor = Color.FromArgb(73, 78, 83);
-            pnlLeft.Controls.Add(btnHelp);
+            pnlLeft.Controls.Add(btnTypeReport);
             pnlLeft.Controls.Add(btnCategories);
             pnlLeft.Controls.Add(btnObject);
             pnlLeft.Controls.Add(btnSettings);
@@ -70,24 +72,37 @@
             pnlLeft.Size = new Size(310, 1143);
             pnlLeft.TabIndex = 0;
 
+            // btnTypeReport
             // 
-            // btnHelp
+            btnTypeReport.Dock = DockStyle.Top;
+            btnTypeReport.FlatAppearance.BorderSize = 0;
+            btnTypeReport.FlatStyle = FlatStyle.Flat;
+            btnTypeReport.ForeColor = Color.White;
+            btnTypeReport.Image = (Image)resources.GetObject("btnHelp.Image");
+            btnTypeReport.ImageAlign = ContentAlignment.MiddleLeft;
+            btnTypeReport.Location = new Point(0, 567);
+            btnTypeReport.Margin = new Padding(2, 2, 2, 2);
+            btnTypeReport.Name = "btnTypeReport";
+            btnTypeReport.Padding = new Padding(15, 0, 0, 0);
+            btnTypeReport.Size = new Size(232, 52);
+            btnTypeReport.TabIndex = 1;
+            btnTypeReport.Tag = "          Type de signalements";
+            btnTypeReport.Text = "          Type de signalements";
+            btnTypeReport.TextAlign = ContentAlignment.MiddleLeft;
+            btnTypeReport.UseVisualStyleBackColor = true;
+            btnTypeReport.Click += btnTypeReport_Click;
+
+
             // 
-            btnHelp.Dock = DockStyle.Top;
-            btnHelp.FlatAppearance.BorderSize = 0;
-            btnHelp.FlatStyle = FlatStyle.Flat;
-            btnHelp.ForeColor = Color.White;
-            btnHelp.Image = (Image)resources.GetObject("btnHelp.Image");
-            btnHelp.ImageAlign = ContentAlignment.MiddleLeft;
-            btnHelp.Location = new Point(0, 549);
-            btnHelp.Name = "btnHelp";
-            btnHelp.Padding = new Padding(20, 0, 0, 0);
-            btnHelp.Size = new Size(310, 70);
-            btnHelp.TabIndex = 1;
-            btnHelp.Tag = "          Help";
-            btnHelp.Text = "          Help";
-            btnHelp.TextAlign = ContentAlignment.MiddleLeft;
-            btnHelp.UseVisualStyleBackColor = true;
+            // pnlTypeReport
+            // 
+            pnlTypeReport.Dock = DockStyle.Fill;
+            pnlTypeReport.BackColor = Color.FromArgb(244, 246, 249);
+            pnlTypeReport.Location = new Point(310, 70);
+            pnlTypeReport.Name = "pnlTypeReport";
+            pnlTypeReport.Size = new Size(1624, 1073);
+            pnlTypeReport.TabIndex = 2;
+            pnlTypeReport.Visible = false;
 
             // 
             // btnCategories
@@ -159,6 +174,8 @@
             pnlObjects.Visible = false;
 
             _objectListManager = new WinFormsApp.UI.ObjectListManager(pnlObjects);
+            _typeReportListManager = new WinFormsApp.UI.TypeReportListScreen(pnlTypeReport);
+
 
             // 
             // btnSettings
@@ -396,6 +413,7 @@
             ClientSize = new Size(1934, 1185);
             Controls.Add(panel2);
             Controls.Add(pnlObjects);
+            Controls.Add(pnlTypeReport);
             Controls.Add(pnlCategories);
             Controls.Add(pnlLeft);
             Controls.Add(statusStrip1);
@@ -426,7 +444,7 @@
         private Button btnMenuBar;
         private Button btnLogoSmall;
         private Button btnHome;
-        private Button btnHelp;
+        private Button btnTypeReport;
         private Button btnSettings;
         private Button btn5;
         private Button btn4;
@@ -439,6 +457,7 @@
         private Panel pnlCategories;
         private Button btnObject;
         private Panel pnlObjects;
+        private Panel pnlTypeReport;
 
         private async void btnCategories_Click(object sender, EventArgs e)
         {
@@ -458,8 +477,17 @@
         {
             pnlObjects.Visible = true;
             pnlCategories.Visible = false;
-            pnlSearch.Visible = true;
+            pnlSearch.Visible = false;
             await _objectListManager.LoadObjectsAsync();
+        }
+
+        private async void btnTypeReport_Click(object sender, EventArgs e)
+        {
+            pnlObjects.Visible = false;
+            pnlCategories.Visible = false;
+            pnlSearch.Visible = false;
+            pnlTypeReport.Visible = true;
+            await _typeReportListManager.LoadTypeReportsAsync();
         }
     }
 }
