@@ -15,6 +15,7 @@ namespace WinFormsApp.UI
         private readonly DataGridView _dataGridView;
         private readonly ObjectService _objectService;
         private readonly CategoryService _categoryService;
+        private readonly UserService _userService;
 
         private int _currentPage = 1; 
         private int _pageSize = 30;  
@@ -24,6 +25,7 @@ namespace WinFormsApp.UI
             _panel = panel;
             _objectService = new ObjectService();
             _categoryService = new CategoryService();
+            _userService = new UserService();
 
             Panel mainPanel = new Panel
             {
@@ -106,11 +108,31 @@ namespace WinFormsApp.UI
                 await LoadObjectsAsync(_currentPage, _pageSize, searchTextBox1.Text, searchTextBox3.Text, (int?)categoryComboBox.SelectedValue, selectedStatus, previousButton, nextButton);
             };
 
+            Button addButton = new Button
+            {
+                Text = "Ajouter",
+                BackColor = ColorTranslator.FromHtml("#8a8f6a"),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Width = 250,
+                Height = 60,
+                TextAlign = ContentAlignment.MiddleCenter,
+                Margin = new Padding(0)
+            };
+
+            addButton.Click += (sender, e) =>
+            {
+                var addObjectForm = new AddObjectForm(_objectService, _categoryService,_userService);
+                addObjectForm.ShowDialog();
+                LoadObjectsAsync(_currentPage, _pageSize).ConfigureAwait(false);
+            };
+
             searchPanel.Controls.Add(searchTextBox1);
             searchPanel.Controls.Add(searchTextBox3);
             searchPanel.Controls.Add(categoryComboBox);
             searchPanel.Controls.Add(statusComboBox);
             searchPanel.Controls.Add(searchButton);
+            searchPanel.Controls.Add(addButton);
 
             FlowLayoutPanel paginationPanel = new FlowLayoutPanel
             {
@@ -187,6 +209,7 @@ namespace WinFormsApp.UI
             };
             _dataGridView.Columns.Add(deleteButtonColumn);
 
+            
             mainPanel.Controls.Add(_dataGridView);
             mainPanel.Controls.Add(searchPanel);
             mainPanel.Controls.Add(titleLabel);

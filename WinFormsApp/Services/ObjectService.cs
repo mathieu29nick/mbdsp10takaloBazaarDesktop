@@ -6,6 +6,7 @@ using WinFormsApp.Configuration;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text;
 
 namespace WinFormsApp.Services
 {
@@ -15,7 +16,7 @@ namespace WinFormsApp.Services
 
         public ObjectService()
         {
-            _httpClient = new HttpClient();
+            _httpClient = HttpClientFactory.Instance;
         }
 
         public async Task<List<Models.Object>> GetObjectsAsync(int page, int limit, string name = null, string description = null, int? userId = null, int? categoryId = null, string status = null)
@@ -65,5 +66,45 @@ namespace WinFormsApp.Services
                 return new List<Models.Object>();
             }
         }
-    }
+
+        public async Task<bool> CreateObjectAsync(Models.Object newObject)
+        {
+            try
+            {
+                string url = $"{Configuration.Configuration.URL}/objects";
+
+                var jsonObject = new
+                {
+                    name = newObject.Name,
+                    description = newObject.Description,
+                    category_id = newObject.CategoryId,
+                    image_file = newObject.Image,
+                    user_id = newObject.UserId
+                };
+
+                string json = JsonSerializer.Serialize(jsonObject);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await _httpClient.PostAsync(url, content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    string errorResponse = await response.Content.ReadAsStringAsync();
+                    MessageBox.Show($"Erreur lors de la création de l'objet : {errorResponse}");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors de la création de l'objet : {ex.Message}");
+                return false;
+            }
+            }
+
+        }
+
 }
