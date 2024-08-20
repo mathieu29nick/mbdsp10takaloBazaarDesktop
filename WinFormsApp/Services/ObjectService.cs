@@ -37,7 +37,6 @@ namespace WinFormsApp.Services
                     else url += $"&category_id={categoryId}";
 
                 if (!string.IsNullOrEmpty(status))
-                    MessageBox.Show($"ATO: {status}");
                     url += $"&status={status}";
 
                 HttpResponseMessage response = await _httpClient.GetAsync(url);

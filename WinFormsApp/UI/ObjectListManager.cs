@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinFormsApp.Models;
+using WinFormsApp.Models.ApiResponse;
 using WinFormsApp.Services;
 
 namespace WinFormsApp.UI
@@ -232,7 +233,8 @@ namespace WinFormsApp.UI
         {
             try
             {
-                List<Category> categories = await _categoryService.GetCategoriesAsync();
+                CategoriesResponse categoriesresponse = await _categoryService.GetCategoriesAsync(1,1000,"");
+                List<Category> categories = categoriesresponse.Data.Categories;
                 categories.Insert(0, new Category { Id = -1, Name = "Toutes les catégories" });
                 if (categories != null && categories.Count > 0)
                 {
