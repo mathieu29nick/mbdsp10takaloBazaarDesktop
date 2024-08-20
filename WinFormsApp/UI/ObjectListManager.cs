@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using WinFormsApp.Models;
+﻿using System.Reflection;
 using WinFormsApp.Models.ApiResponse;
+using WinFormsApp.Models;
 using WinFormsApp.Services;
+using WinFormsApp.UI;
 
 namespace WinFormsApp.UI
 {
@@ -17,8 +14,8 @@ namespace WinFormsApp.UI
         private readonly CategoryService _categoryService;
         private readonly UserService _userService;
 
-        private int _currentPage = 1; 
-        private int _pageSize = 30;  
+        private int _currentPage = 1;
+        private int _pageSize = 30;
 
         public ObjectListManager(Panel panel)
         {
@@ -72,11 +69,11 @@ namespace WinFormsApp.UI
             };
 
             var statusItems = new Dictionary<string, string>
-            {
-                { "Tous les statuts", "" },
-                { "Disponible", "Available" },
-                { "Retiré", "Removed" }
-            };
+        {
+            { "Tous les statuts", "" },
+            { "Disponible", "Available" },
+            { "Retiré", "Removed" }
+        };
 
             foreach (var item in statusItems)
             {
@@ -122,7 +119,7 @@ namespace WinFormsApp.UI
 
             addButton.Click += (sender, e) =>
             {
-                var addObjectForm = new AddObjectForm(_objectService, _categoryService,_userService);
+                var addObjectForm = new AddObjectForm(_objectService, _categoryService, _userService);
                 addObjectForm.ShowDialog();
                 LoadObjectsAsync(_currentPage, _pageSize).ConfigureAwait(false);
             };
@@ -163,7 +160,6 @@ namespace WinFormsApp.UI
                 await LoadObjectsAsync(_currentPage, _pageSize, searchTextBox1.Text, searchTextBox3.Text, (int?)categoryComboBox.SelectedValue, selectedStatus, previousButton, nextButton);
             };
 
-
             paginationPanel.Controls.Add(previousButton);
             paginationPanel.Controls.Add(nextButton);
 
@@ -179,7 +175,7 @@ namespace WinFormsApp.UI
                 AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
             };
 
-            _dataGridView.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "ID", DataPropertyName = "Id" });
+            _dataGridView.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "ID", DataPropertyName = "Id", Name = "Id" });
             _dataGridView.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Nom", DataPropertyName = "Name" });
             _dataGridView.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Catégorie", DataPropertyName = "CategoryName" });
             _dataGridView.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Créé le", DataPropertyName = "CreatedAt" });
@@ -209,7 +205,8 @@ namespace WinFormsApp.UI
             };
             _dataGridView.Columns.Add(deleteButtonColumn);
 
-            
+            _dataGridView.CellClick += DataGridView_CellClick;
+
             mainPanel.Controls.Add(_dataGridView);
             mainPanel.Controls.Add(searchPanel);
             mainPanel.Controls.Add(titleLabel);
@@ -217,6 +214,25 @@ namespace WinFormsApp.UI
 
             _panel.Controls.Add(mainPanel);
             PopulateCategoryComboBoxAsync(categoryComboBox).ConfigureAwait(false);
+        }
+
+        private void DataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                if (_dataGridView.Columns[e.ColumnIndex].Name == "EditButton")
+                {
+                    int objectId = (int)_dataGridView.Rows[e.RowIndex].Cells["Id"].Value;
+                    EditObjectForm editForm = new EditObjectForm(_objectService,_categoryService, objectId);
+                    editForm.ShowDialog();
+                    LoadObjectsAsync(_currentPage, _pageSize).ConfigureAwait(false);
+                }
+               
+                else if (_dataGridView.Columns[e.ColumnIndex].Name == "DeleteButton")
+                {
+                    // onDelete
+                }
+            }
         }
 
         public async Task LoadObjectsAsync(int page = 1, int limit = 30, string name = null, string description = null, int? categoryId = null, string status = null, Button previousButton = null, Button nextButton = null)
@@ -235,7 +251,6 @@ namespace WinFormsApp.UI
                     _dataGridView.DataSource = objects;
                 }
 
-                
                 if (previousButton != null)
                 {
                     previousButton.Visible = page > 1;
@@ -256,7 +271,7 @@ namespace WinFormsApp.UI
         {
             try
             {
-                CategoriesResponse categoriesresponse = await _categoryService.GetCategoriesAsync(1,1000,"");
+                CategoriesResponse categoriesresponse = await _categoryService.GetCategoriesAsync(1, 1000, "");
                 List<Category> categories = categoriesresponse.Data.Categories;
                 categories.Insert(0, new Category { Id = -1, Name = "Toutes les catégories" });
                 if (categories != null && categories.Count > 0)
@@ -276,4 +291,5 @@ namespace WinFormsApp.UI
             }
         }
     }
+
 }
