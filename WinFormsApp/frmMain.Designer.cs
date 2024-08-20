@@ -154,7 +154,7 @@
             pnlObjects.BackColor = Color.FromArgb(244, 246, 249);
             pnlObjects.Location = new Point(950, 950);
             pnlObjects.Name = "pnlObjects";
-            pnlObjects.Size = new Size(1624, 1073);
+            pnlObjects.Size = new Size(1624,73);
             pnlObjects.TabIndex = 3;
             pnlObjects.Visible = false;
 
@@ -207,7 +207,7 @@
             btn4.ForeColor = Color.White;
             btn4.Image = (Image)resources.GetObject("btn4.Image");
             btn4.ImageAlign = ContentAlignment.MiddleLeft;
-            btn4.Location = new Point(0, 339);
+            btn4.Location = new Point(250, 339);
             btn4.Name = "btn4";
             btn4.Padding = new Padding(20, 0, 0, 0);
             btn4.Size = new Size(310, 70);
@@ -443,18 +443,14 @@
         private async void btnCategories_Click(object sender, EventArgs e)
         {
             pnlCategories.Visible = true;
-            pnlObjects.Visible = false; 
+            pnlObjects.Visible = false;
             pnlSearch.Visible = false;
 
-            var categoryService = new WinFormsApp.Services.CategoryService();
-            List<WinFormsApp.Models.Category> categories = await categoryService.GetCategoriesAsync();
+            pnlCategories.Controls.Clear();
 
-            ListBox listBoxCategories = (ListBox)pnlCategories.Controls[0];
-            listBoxCategories.Items.Clear();
-            foreach (var category in categories)
-            {
-                listBoxCategories.Items.Add(category.Name);
-            }
+            var categoryListControl = new WinFormsApp.UI.CategoryListControl();
+            categoryListControl.Dock = DockStyle.Fill;
+            pnlCategories.Controls.Add(categoryListControl);
         }
 
         // Liste des Objets
