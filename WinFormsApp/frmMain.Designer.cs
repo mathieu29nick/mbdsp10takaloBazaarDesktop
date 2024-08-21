@@ -534,18 +534,15 @@
             pnlCategories.Visible = false;
             pnlObjects.Visible = false;
             pnlUsers.Visible = false;
+            pnlExchange.Visible = false;
+            pnlTypeReport.Visible = false;
         }
 
         private void btnCategories_Click(object sender, EventArgs e)
         {
             HideAllPanels();
             pnlCategories.Visible = true;
-            pnlSearch.Visible = false;
-            pnlTypeReport.Visible = false;
-            pnlExchange.Visible = false;
-
             pnlCategories.Controls.Clear();
-
             var categoryListControl = new WinFormsApp.UI.CategoryListControl();
             categoryListControl.Dock = DockStyle.Fill;
             pnlCategories.Controls.Add(categoryListControl);
@@ -556,10 +553,6 @@
         {
             HideAllPanels();
             pnlObjects.Visible = true;
-            pnlCategories.Visible = false;
-            pnlSearch.Visible = false;
-            pnlTypeReport.Visible = false;
-            pnlExchange.Visible = false;
             await _objectListManager.LoadObjectsAsync();
         }
 
@@ -577,20 +570,14 @@
       
         private async void btnTypeReport_Click(object sender, EventArgs e)
         {
-            pnlObjects.Visible = false;
-            pnlCategories.Visible = false;
-            pnlSearch.Visible = false;
+            HideAllPanels();
             pnlTypeReport.Visible = true;
-            pnlExchange.Visible = false;
             await _typeReportListManager.LoadTypeReportsAsync();
         }
 
         private async void btnExchange_Click(object sender, EventArgs e)
         {
-            pnlObjects.Visible = false;
-            pnlCategories.Visible = false;
-            pnlSearch.Visible = false;
-            pnlTypeReport.Visible = false;
+            HideAllPanels();
             pnlExchange.Visible = true;
             await _exchangeListManager.LoadExchangesAsync();
         }
