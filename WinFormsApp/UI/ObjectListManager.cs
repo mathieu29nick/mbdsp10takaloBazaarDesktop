@@ -178,7 +178,7 @@ namespace WinFormsApp.UI
             _dataGridView.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "ID", DataPropertyName = "Id", Name = "Id" });
             _dataGridView.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Nom", DataPropertyName = "Name" });
             _dataGridView.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Catégorie", DataPropertyName = "CategoryName" });
-            _dataGridView.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Créé le", DataPropertyName = "CreatedAt" });
+            _dataGridView.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Créé le", DataPropertyName = "Created_At" });
             _dataGridView.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Statut", DataPropertyName = "Status" });
 
             var detailButtonColumn = new DataGridViewButtonColumn

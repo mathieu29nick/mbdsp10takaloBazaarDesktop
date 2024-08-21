@@ -68,7 +68,7 @@ namespace WinFormsApp.UI
             Label userValueLabel = new Label { Text = _object.User.Email, Location = new Point(150, 220), AutoSize = true };
 
             Label dateLabel = new Label { Text = "Crée le :", Location = new Point(20, 260), AutoSize = true };
-            Label dateValueLabel = new Label { Text = _object.CreatedAt.ToString("dd MMMM yyyy"), Location = new Point(150, 260), AutoSize = true };
+            Label dateValueLabel = new Label { Text = _object.Created_At.ToString("dd MMMM yyyy"), Location = new Point(150, 260), AutoSize = true };
 
             PictureBox imageBox = new PictureBox
             {

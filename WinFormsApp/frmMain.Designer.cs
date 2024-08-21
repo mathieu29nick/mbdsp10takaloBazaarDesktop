@@ -5,6 +5,7 @@
         private System.ComponentModel.IContainer components = null;
         private WinFormsApp.UI.ObjectListManager _objectListManager;
         private WinFormsApp.UI.TypeReportListScreen _typeReportListManager;
+        private WinFormsApp.UI.ExchangeListScreen _exchangeListManager;
 
         protected override void Dispose(bool disposing)
         {
@@ -29,6 +30,8 @@
             btn3 = new Button();
             btn2 = new Button();
             btn1 = new Button();
+            btnExchange = new Button();
+            pnlExchange =new Panel();
             btnObject = new Button();
             btnHome = new Button();
             pnlSearch = new Panel();
@@ -57,6 +60,7 @@
             pnlLeft.Controls.Add(btnTypeReport);
             pnlLeft.Controls.Add(btnCategories);
             pnlLeft.Controls.Add(btnObject);
+            pnlLeft.Controls.Add(btnExchange);
             pnlLeft.Controls.Add(btnSettings);
             pnlLeft.Controls.Add(btn5);
             pnlLeft.Controls.Add(btn4);
@@ -90,7 +94,7 @@
             btnTypeReport.Text = "          Type de signalements";
             btnTypeReport.TextAlign = ContentAlignment.MiddleLeft;
             btnTypeReport.UseVisualStyleBackColor = true;
-            btnTypeReport.Click += btnTypeReport_Click;
+            btnTypeReport.Click += btnExchange_Click;
 
 
             // 
@@ -135,6 +139,37 @@
             pnlCategories.TabIndex = 2;
             pnlCategories.Visible = false;
 
+            // 
+            // btnExchange
+            // 
+            btnExchange.Dock = DockStyle.Top;
+            btnExchange.FlatAppearance.BorderSize = 0;
+            btnExchange.FlatStyle = FlatStyle.Flat;
+            btnExchange.ForeColor = Color.White;
+            btnExchange.Image = (Image)resources.GetObject("btnHelp.Image");
+            btnExchange.ImageAlign = ContentAlignment.MiddleLeft;
+            btnExchange.Location = new Point(0, 700);
+            btnExchange.Name = "btnCategories";
+            btnExchange.Padding = new Padding(20, 0, 0, 0);
+            btnExchange.Size = new Size(310, 70);
+            btnExchange.TabIndex = 2;
+            btnExchange.Tag = "          Liste Exchanges";
+            btnExchange.Text = "          Liste Echanges";
+            btnExchange.TextAlign = ContentAlignment.MiddleLeft;
+            btnExchange.UseVisualStyleBackColor = true;
+            btnExchange.Click += new EventHandler(this.btnExchange_Click);
+
+            // 
+            // pnlExchange
+            // 
+            pnlExchange.Dock = DockStyle.Fill;
+            pnlExchange.BackColor = Color.FromArgb(244, 246, 249);
+            pnlExchange.Location = new Point(310, 70);
+            pnlExchange.Name = "pnlExchange";
+            pnlExchange.Size = new Size(1624, 1073);
+            pnlExchange.TabIndex = 2;
+            pnlExchange.Visible = false;
+
             ListBox listBoxCategories = new ListBox();
             listBoxCategories.Dock = DockStyle.Fill;
             listBoxCategories.BackColor = Color.White;
@@ -175,6 +210,7 @@
 
             _objectListManager = new WinFormsApp.UI.ObjectListManager(pnlObjects);
             _typeReportListManager = new WinFormsApp.UI.TypeReportListScreen(pnlTypeReport);
+            _exchangeListManager = new WinFormsApp.UI.ExchangeListScreen(pnlExchange);
 
 
             // 
@@ -415,6 +451,7 @@
             Controls.Add(pnlObjects);
             Controls.Add(pnlTypeReport);
             Controls.Add(pnlCategories);
+            Controls.Add(pnlExchange);
             Controls.Add(pnlLeft);
             Controls.Add(statusStrip1);
             DoubleBuffered = true;
@@ -458,6 +495,8 @@
         private Button btnObject;
         private Panel pnlObjects;
         private Panel pnlTypeReport;
+        private Button btnExchange;
+        private Panel pnlExchange;
 
         private async void btnCategories_Click(object sender, EventArgs e)
         {
@@ -465,6 +504,7 @@
             pnlObjects.Visible = false;
             pnlSearch.Visible = false;
             pnlTypeReport.Visible = false;
+            pnlExchange.Visible = false;
 
             pnlCategories.Controls.Clear();
 
@@ -480,6 +520,7 @@
             pnlCategories.Visible = false;
             pnlSearch.Visible = false;
             pnlTypeReport.Visible = false;
+            pnlExchange.Visible = false;
             await _objectListManager.LoadObjectsAsync();
         }
 
@@ -489,7 +530,18 @@
             pnlCategories.Visible = false;
             pnlSearch.Visible = false;
             pnlTypeReport.Visible = true;
+            pnlExchange.Visible = false;
             await _typeReportListManager.LoadTypeReportsAsync();
+        }
+
+        private async void btnExchange_Click(object sender, EventArgs e)
+        {
+            pnlObjects.Visible = false;
+            pnlCategories.Visible = false;
+            pnlSearch.Visible = false;
+            pnlTypeReport.Visible = false;
+            pnlExchange.Visible = true;
+            await _exchangeListManager.LoadExchangesAsync();
         }
     }
 }
