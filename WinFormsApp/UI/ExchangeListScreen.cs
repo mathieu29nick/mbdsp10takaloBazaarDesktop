@@ -199,7 +199,9 @@ namespace WinFormsApp.UI
                 if (_dataGridView.Columns[e.ColumnIndex].Name == "DetailButton")
                 {
                     int exchangeId = (int)_dataGridView.Rows[e.RowIndex].Cells["Id"].Value;
-                   // ShowExchangeDetailsAsync(exchangeId).ConfigureAwait(false);
+                    // ShowExchangeDetailsAsync(exchangeId).ConfigureAwait(false);
+                    ExchangeDetailForm detailForm = new ExchangeDetailForm(exchangeId);
+                    detailForm.ShowDialog();
                 }
             }
         }

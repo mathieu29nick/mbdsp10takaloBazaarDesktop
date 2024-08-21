@@ -74,6 +74,39 @@ namespace WinFormsApp.Services
             }
         }
 
+        public async Task<ExchangeDetailResponse> GetExchangeByIdAsync(int exchangeId)
+        {
+            try
+            {
+                string url = $"{Configuration.Configuration.URL}/exchange/{exchangeId}";
 
+                HttpResponseMessage response = await _httpClient.GetAsync(url);
+                response.EnsureSuccessStatusCode();
+                string responseBody = await response.Content.ReadAsStringAsync();
+               
+                var exchangeDetailResponse = JsonSerializer.Deserialize<ExchangeDetailResponse>(responseBody, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
+
+                if (exchangeDetailResponse == null)
+                {
+                    MessageBox.Show("Échange non trouvé ou problème de désérialisation.");
+                    return null;
+                }
+
+                return exchangeDetailResponse;
+            }
+            catch (HttpRequestException e)
+            {
+                MessageBox.Show($"Erreur de requête : {e.Message}");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur : {ex.Message}");
+                return null;
+            }
+        }
     }
 }

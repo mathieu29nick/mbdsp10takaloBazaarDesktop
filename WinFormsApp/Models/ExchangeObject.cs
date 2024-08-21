@@ -10,8 +10,9 @@ namespace WinFormsApp.Models
     public class ExchangeObject
     {
         public int? Id { get; set; }
-        public int? ExchangeId { get; set; }
-        public int? ObjectId { get; set; }
-        public int? UserId { get; set; }
+        public int? Exchange_Id { get; set; }
+        public int? Object_Id { get; set; }
+        public int? User_Id { get; set; }
+        public Object Object { get; set; }
     }
 }
