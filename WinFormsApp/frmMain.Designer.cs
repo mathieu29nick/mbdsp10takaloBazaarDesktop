@@ -43,6 +43,7 @@
             panel2 = new Panel();
             btnMenuBar = new Button();
             pnlCategories = new Panel();
+            btnUsers = new Button();
             statusStrip1 = new StatusStrip();
             toolStripStatusLabel1 = new ToolStripStatusLabel();
             pnlLeft.SuspendLayout();
@@ -59,6 +60,7 @@
             pnlLeft.BackColor = Color.FromArgb(73, 78, 83);
             pnlLeft.Controls.Add(btnTypeReport);
             pnlLeft.Controls.Add(btnCategories);
+            pnlLeft.Controls.Add(btnUsers);
             pnlLeft.Controls.Add(btnObject);
             pnlLeft.Controls.Add(btnExchange);
             pnlLeft.Controls.Add(btnSettings);
@@ -76,8 +78,25 @@
             pnlLeft.Size = new Size(310, 1143);
             pnlLeft.TabIndex = 0;
 
+            // User button
+            btnUsers.Dock = DockStyle.Top;
+            btnUsers.FlatAppearance.BorderSize = 0;
+            btnUsers.FlatStyle = FlatStyle.Flat;
+            btnUsers.ForeColor = Color.White;
+            btnUsers.Image = (Image)resources.GetObject("btnHelp.Image"); // You can change this image to whatever fits.
+            btnUsers.ImageAlign = ContentAlignment.MiddleLeft;
+            btnUsers.Location = new Point(0, 759); // Adjust the location as needed.
+            btnUsers.Name = "btnUsers";
+            btnUsers.Padding = new Padding(20, 0, 0, 0);
+            btnUsers.Size = new Size(310, 70);
+            btnUsers.TabIndex = 2;
+            btnUsers.Tag = "          Utilisateurs";
+            btnUsers.Text = "          Utilisateurs";
+            btnUsers.TextAlign = ContentAlignment.MiddleLeft;
+            btnUsers.UseVisualStyleBackColor = true;
+            btnUsers.Click += new EventHandler(this.btnUsers_Click);
+          
             // btnTypeReport
-            // 
             btnTypeReport.Dock = DockStyle.Top;
             btnTypeReport.FlatAppearance.BorderSize = 0;
             btnTypeReport.FlatStyle = FlatStyle.Flat;
@@ -175,6 +194,16 @@
             listBoxCategories.BackColor = Color.White;
             listBoxCategories.ForeColor = Color.Black;
             pnlCategories.Controls.Add(listBoxCategories);
+
+            pnlUsers = new Panel();
+            pnlUsers.Dock = DockStyle.Fill;
+            pnlUsers.BackColor = Color.FromArgb(244, 246, 249);
+            pnlUsers.Location = new Point(310, 70);
+            pnlUsers.Name = "pnlUsers";
+            pnlUsers.Size = new Size(1624, 1073);
+            pnlUsers.TabIndex = 4;
+            pnlUsers.Visible = false;
+            Controls.Add(pnlUsers);
 
 
             // 
@@ -492,16 +521,25 @@
         private Panel pnlSearch;
         private Button btnCategories;
         private Panel pnlCategories;
+        private Button btnUsers;
+        private Panel pnlUsers;
         private Button btnObject;
         private Panel pnlObjects;
         private Panel pnlTypeReport;
         private Button btnExchange;
         private Panel pnlExchange;
 
-        private async void btnCategories_Click(object sender, EventArgs e)
+        private void HideAllPanels()
         {
-            pnlCategories.Visible = true;
+            pnlCategories.Visible = false;
             pnlObjects.Visible = false;
+            pnlUsers.Visible = false;
+        }
+
+        private void btnCategories_Click(object sender, EventArgs e)
+        {
+            HideAllPanels();
+            pnlCategories.Visible = true;
             pnlSearch.Visible = false;
             pnlTypeReport.Visible = false;
             pnlExchange.Visible = false;
@@ -516,6 +554,7 @@
         // Liste des Objets
         private async void btnObject_Click(object sender, EventArgs e)
         {
+            HideAllPanels();
             pnlObjects.Visible = true;
             pnlCategories.Visible = false;
             pnlSearch.Visible = false;
@@ -524,6 +563,18 @@
             await _objectListManager.LoadObjectsAsync();
         }
 
+      private void btnUsers_Click(object sender, EventArgs e)
+        {
+            HideAllPanels();
+            pnlUsers.Visible = true;
+
+            pnlUsers.Controls.Clear();
+
+            var userListControl = new WinFormsApp.UI.UserListControl();
+            userListControl.Dock = DockStyle.Fill;
+            pnlUsers.Controls.Add(userListControl);
+        }
+      
         private async void btnTypeReport_Click(object sender, EventArgs e)
         {
             pnlObjects.Visible = false;
