@@ -20,6 +20,7 @@ namespace WinFormsApp.UI
         private ComboBox categoryComboBox;
         private Button uploadImageButton;
         private string uploadedImageUrl = null;
+        private PictureBox imageBox;
 
         public EditObjectForm(ObjectService objectService, CategoryService categoryService, int objectId)
         {
@@ -34,7 +35,7 @@ namespace WinFormsApp.UI
         private void InitializeComponents()
         {
             this.Text = "Modifier un Objet";
-            this.Size = new Size(600, 400);
+            this.Size = new Size(600, 600);
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.StartPosition = FormStartPosition.CenterScreen;
 
@@ -44,12 +45,11 @@ namespace WinFormsApp.UI
                 Font = new Font("Arial", 20, FontStyle.Bold),
                 Dock = DockStyle.Top,
                 Height = 40,
-                Location = new Point(150, 60),
+                Location = new Point(150, 20),
                 Margin = new Padding(0, 0, 20, 0),
                 ForeColor = ColorTranslator.FromHtml("#bc8246"),
                 TextAlign = ContentAlignment.MiddleCenter,
             };
-
 
             Label nameLabel = new Label { Text = "Nom:", Location = new Point(20, 60), AutoSize = true };
             nameTextBox = new TextBox { Location = new Point(150, 60), Width = 400 };
@@ -64,9 +64,17 @@ namespace WinFormsApp.UI
             uploadImageButton = new Button { Text = "Télécharger l'image", Location = new Point(150, 180), Width = 400, Height = 50 };
             uploadImageButton.Click += UploadImageButton_Click;
 
-            Button submitButton = new Button { 
+            imageBox = new PictureBox
+            {
+                Location = new Point(150, 250),
+                Size = new Size(200, 200),
+                SizeMode = PictureBoxSizeMode.Zoom
+            };
+
+            Button submitButton = new Button
+            {
                 Text = "Modifier",
-                Location = new Point(150, 240),
+                Location = new Point(150, 480),
                 Width = 150,
                 Height = 30,
                 TextAlign = ContentAlignment.MiddleCenter,
@@ -85,6 +93,7 @@ namespace WinFormsApp.UI
             this.Controls.Add(categoryComboBox);
             this.Controls.Add(imageLabel);
             this.Controls.Add(uploadImageButton);
+            this.Controls.Add(imageBox);
             this.Controls.Add(submitButton);
         }
 
@@ -111,6 +120,7 @@ namespace WinFormsApp.UI
                 MessageBox.Show($"Erreur lors du chargement des catégories : {ex.Message}");
             }
         }
+
         private async Task LoadObjectDataAsync()
         {
             try
@@ -126,6 +136,25 @@ namespace WinFormsApp.UI
 
                     uploadedImageUrl = await ConvertImageToBase64Async(_currentObject.Image);
                     uploadImageButton.Text = "Image téléchargée";
+
+                    if (!string.IsNullOrEmpty(uploadedImageUrl))
+                    {
+                        if (Uri.IsWellFormedUriString(_currentObject.Image, UriKind.Absolute))
+                        {
+                            using (HttpClient client = new HttpClient())
+                            {
+                                byte[] imageBytes = await client.GetByteArrayAsync(_currentObject.Image);
+                                using (var ms = new MemoryStream(imageBytes))
+                                {
+                                    imageBox.Image = Image.FromStream(ms);
+                                }
+                            }
+                        }
+                        else if (File.Exists(_currentObject.Image))
+                        {
+                            imageBox.Image = Image.FromFile(_currentObject.Image);
+                        }
+                    }
                 }
                 else
                 {
@@ -176,7 +205,6 @@ namespace WinFormsApp.UI
             }
         }
 
-
         public static string ConvertImageToBase64(string imagePath)
         {
             try
@@ -211,6 +239,7 @@ namespace WinFormsApp.UI
                 {
                     uploadedImageUrl = ConvertImageToBase64(openFileDialog.FileName);
                     uploadImageButton.Text = "Image téléchargée";
+                    imageBox.Image = Image.FromFile(openFileDialog.FileName);
                 }
             }
         }

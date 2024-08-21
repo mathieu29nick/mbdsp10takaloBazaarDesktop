@@ -464,6 +464,7 @@
             pnlCategories.Visible = true;
             pnlObjects.Visible = false;
             pnlSearch.Visible = false;
+            pnlTypeReport.Visible = false;
 
             pnlCategories.Controls.Clear();
 
@@ -478,6 +479,7 @@
             pnlObjects.Visible = true;
             pnlCategories.Visible = false;
             pnlSearch.Visible = false;
+            pnlTypeReport.Visible = false;
             await _objectListManager.LoadObjectsAsync();
         }
 

@@ -181,9 +181,21 @@ namespace WinFormsApp.UI
             _dataGridView.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Créé le", DataPropertyName = "CreatedAt" });
             _dataGridView.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Statut", DataPropertyName = "Status" });
 
+            var detailButtonColumn = new DataGridViewButtonColumn
+            {
+                HeaderText = "-",
+                Text = "Détail",
+                UseColumnTextForButtonValue = true,
+                Name = "DetailButton",
+                DataPropertyName = "DetailButton",
+                FlatStyle = FlatStyle.Flat,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+            };
+            _dataGridView.Columns.Add(detailButtonColumn);
+
             var editButtonColumn = new DataGridViewButtonColumn
             {
-                HeaderText = "",
+                HeaderText = "-",
                 Text = "Modifier",
                 UseColumnTextForButtonValue = true,
                 Name = "EditButton",
@@ -195,7 +207,7 @@ namespace WinFormsApp.UI
 
             var deleteButtonColumn = new DataGridViewButtonColumn
             {
-                HeaderText = "",
+                HeaderText = "-",
                 Text = "Supprimer",
                 UseColumnTextForButtonValue = true,
                 Name = "DeleteButton",
@@ -231,6 +243,11 @@ namespace WinFormsApp.UI
                 else if (_dataGridView.Columns[e.ColumnIndex].Name == "DeleteButton")
                 {
                     // onDelete
+                }
+                else if (_dataGridView.Columns[e.ColumnIndex].Name == "DetailButton")
+                {
+                    int objectId = (int)_dataGridView.Rows[e.RowIndex].Cells["Id"].Value;
+                    ShowObjectDetailsAsync(objectId).ConfigureAwait(false);
                 }
             }
         }
@@ -290,6 +307,29 @@ namespace WinFormsApp.UI
                 MessageBox.Show($"Une erreur s'est produite lors du chargement des catégories : {ex.Message}");
             }
         }
+
+        private async Task ShowObjectDetailsAsync(int objectId)
+        {
+            try
+            {
+                Models.Object selectedObject = await _objectService.GetObjectByIdAsync(objectId);
+
+                if (selectedObject != null)
+                {
+                    ObjectDetailForm detailForm = new ObjectDetailForm(selectedObject);
+                    detailForm.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Erreur lors de la récupération des détails de l'objet.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur : {ex.Message}");
+            }
+        }
+
     }
 
 }
