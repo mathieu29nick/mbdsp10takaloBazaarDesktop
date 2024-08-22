@@ -22,6 +22,7 @@ namespace WinFormsApp.UI
         private ComboBox categoryComboBox;
         private ComboBox userComboBox;
         private Button uploadImageButton;
+        private PictureBox imageBox;
         private string uploadedImageUrl = null;
 
         public AddObjectForm(ObjectService objectService, CategoryService categoryService, UserService userService)
@@ -38,7 +39,7 @@ namespace WinFormsApp.UI
         private void InitializeComponents()
         {
             this.Text = "Ajouter un Objet";
-            this.Size = new Size(600, 400);
+            this.Size = new Size(600, 650);
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.StartPosition = FormStartPosition.CenterScreen;
 
@@ -71,9 +72,16 @@ namespace WinFormsApp.UI
             uploadImageButton = new Button { Text = "Télécharger l'image", Location = new Point(150, 220), Width = 400,Height = 50 };
             uploadImageButton.Click += UploadImageButton_Click;
 
+            imageBox = new PictureBox
+            {
+                Location = new Point(150, 280),
+                Size = new Size(200, 200),
+                SizeMode = PictureBoxSizeMode.Zoom
+            };
+
             Button submitButton = new Button { 
                 Text = "Ajouter",
-                Location = new Point(150, 280),
+                Location = new Point(150, 500),
                 Width = 150,
                 Height=30,
                 TextAlign = ContentAlignment.MiddleCenter,
@@ -94,6 +102,7 @@ namespace WinFormsApp.UI
             this.Controls.Add(userComboBox);
             this.Controls.Add(imageLabel);
             this.Controls.Add(uploadImageButton);
+            this.Controls.Add(imageBox);
             this.Controls.Add(submitButton);
         }
 
@@ -141,6 +150,10 @@ namespace WinFormsApp.UI
                 {
                     uploadedImageUrl = openFileDialog.FileName;
                     uploadImageButton.Text = "Image téléchargée";
+                    if (!string.IsNullOrEmpty(uploadedImageUrl))
+                    {
+                        imageBox.Load(uploadedImageUrl);
+                    }
                 }
             }
         }

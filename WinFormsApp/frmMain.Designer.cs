@@ -4,6 +4,8 @@
     {
         private System.ComponentModel.IContainer components = null;
         private WinFormsApp.UI.ObjectListManager _objectListManager;
+        private WinFormsApp.UI.TypeReportListScreen _typeReportListManager;
+        private WinFormsApp.UI.ExchangeListScreen _exchangeListManager;
 
         protected override void Dispose(bool disposing)
         {
@@ -20,7 +22,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             pnlLeft = new Panel();
-            btnHelp = new Button();
+            btnTypeReport = new Button();
             btnCategories = new Button();
             btnSettings = new Button();
             btn5 = new Button();
@@ -28,17 +30,21 @@
             btn3 = new Button();
             btn2 = new Button();
             btn1 = new Button();
+            btnExchange = new Button();
+            pnlExchange =new Panel();
             btnObject = new Button();
             btnHome = new Button();
             btnLogout = new Button();
             pnlSearch = new Panel();
             pnlObjects = new Panel();
+            pnlTypeReport = new Panel();
             tbSearch = new Custom_Controls.RoundTB();
             panel3 = new Panel();
             btnLogoSmall = new Button();
             panel2 = new Panel();
             btnMenuBar = new Button();
             pnlCategories = new Panel();
+            btnUsers = new Button();
             statusStrip1 = new StatusStrip();
             toolStripStatusLabel1 = new ToolStripStatusLabel();
             pnlLeft.SuspendLayout();
@@ -55,8 +61,11 @@
             pnlLeft.BackColor = Color.FromArgb(73, 78, 83);
              pnlLeft.Controls.Add(btnLogout);
             pnlLeft.Controls.Add(btnHelp);
+            pnlLeft.Controls.Add(btnTypeReport);
             pnlLeft.Controls.Add(btnCategories);
+            pnlLeft.Controls.Add(btnUsers);
             pnlLeft.Controls.Add(btnObject);
+            pnlLeft.Controls.Add(btnExchange);
             pnlLeft.Controls.Add(btnSettings);
             pnlLeft.Controls.Add(btn5);
             pnlLeft.Controls.Add(btn4);
@@ -71,6 +80,44 @@
             pnlLeft.Name = "pnlLeft";
             pnlLeft.Size = new Size(310, 1143);
             pnlLeft.TabIndex = 0;
+
+            // User button
+            btnUsers.Dock = DockStyle.Top;
+            btnUsers.FlatAppearance.BorderSize = 0;
+            btnUsers.FlatStyle = FlatStyle.Flat;
+            btnUsers.ForeColor = Color.White;
+            btnUsers.Image = (Image)resources.GetObject("btnHelp.Image"); // You can change this image to whatever fits.
+            btnUsers.ImageAlign = ContentAlignment.MiddleLeft;
+            btnUsers.Location = new Point(0, 759); // Adjust the location as needed.
+            btnUsers.Name = "btnUsers";
+            btnUsers.Padding = new Padding(20, 0, 0, 0);
+            btnUsers.Size = new Size(310, 70);
+            btnUsers.TabIndex = 2;
+            btnUsers.Tag = "          Utilisateurs";
+            btnUsers.Text = "          Utilisateurs";
+            btnUsers.TextAlign = ContentAlignment.MiddleLeft;
+            btnUsers.UseVisualStyleBackColor = true;
+            btnUsers.Click += new EventHandler(this.btnUsers_Click);
+          
+            // btnTypeReport
+            btnTypeReport.Dock = DockStyle.Top;
+            btnTypeReport.FlatAppearance.BorderSize = 0;
+            btnTypeReport.FlatStyle = FlatStyle.Flat;
+            btnTypeReport.ForeColor = Color.White;
+            btnTypeReport.Image = (Image)resources.GetObject("btnHelp.Image");
+            btnTypeReport.ImageAlign = ContentAlignment.MiddleLeft;
+            btnTypeReport.Location = new Point(0, 567);
+            btnTypeReport.Margin = new Padding(2, 2, 2, 2);
+            btnTypeReport.Name = "btnTypeReport";
+            btnTypeReport.Padding = new Padding(15, 0, 0, 0);
+            btnTypeReport.Size = new Size(232, 52);
+            btnTypeReport.TabIndex = 1;
+            btnTypeReport.Tag = "          Type de signalements";
+            btnTypeReport.Text = "          Type de signalements";
+            btnTypeReport.TextAlign = ContentAlignment.MiddleLeft;
+            btnTypeReport.UseVisualStyleBackColor = true;
+            btnTypeReport.Click += btnExchange_Click;
+
 
             // 
             // btnLogout
@@ -95,22 +142,15 @@
 
             // 
             // btnHelp
+            // pnlTypeReport
             // 
-            btnHelp.Dock = DockStyle.Top;
-            btnHelp.FlatAppearance.BorderSize = 0;
-            btnHelp.FlatStyle = FlatStyle.Flat;
-            btnHelp.ForeColor = Color.White;
-            btnHelp.Image = (Image)resources.GetObject("btnHelp.Image");
-            btnHelp.ImageAlign = ContentAlignment.MiddleLeft;
-            btnHelp.Location = new Point(0, 549);
-            btnHelp.Name = "btnHelp";
-            btnHelp.Padding = new Padding(20, 0, 0, 0);
-            btnHelp.Size = new Size(310, 70);
-            btnHelp.TabIndex = 1;
-            btnHelp.Tag = "          Help";
-            btnHelp.Text = "          Help";
-            btnHelp.TextAlign = ContentAlignment.MiddleLeft;
-            btnHelp.UseVisualStyleBackColor = true;
+            pnlTypeReport.Dock = DockStyle.Fill;
+            pnlTypeReport.BackColor = Color.FromArgb(244, 246, 249);
+            pnlTypeReport.Location = new Point(310, 70);
+            pnlTypeReport.Name = "pnlTypeReport";
+            pnlTypeReport.Size = new Size(1624, 1073);
+            pnlTypeReport.TabIndex = 2;
+            pnlTypeReport.Visible = false;
 
             // 
             // btnCategories
@@ -143,11 +183,52 @@
             pnlCategories.TabIndex = 2;
             pnlCategories.Visible = false;
 
+            // 
+            // btnExchange
+            // 
+            btnExchange.Dock = DockStyle.Top;
+            btnExchange.FlatAppearance.BorderSize = 0;
+            btnExchange.FlatStyle = FlatStyle.Flat;
+            btnExchange.ForeColor = Color.White;
+            btnExchange.Image = (Image)resources.GetObject("btnHelp.Image");
+            btnExchange.ImageAlign = ContentAlignment.MiddleLeft;
+            btnExchange.Location = new Point(0, 700);
+            btnExchange.Name = "btnCategories";
+            btnExchange.Padding = new Padding(20, 0, 0, 0);
+            btnExchange.Size = new Size(310, 70);
+            btnExchange.TabIndex = 2;
+            btnExchange.Tag = "          Liste Exchanges";
+            btnExchange.Text = "          Liste Echanges";
+            btnExchange.TextAlign = ContentAlignment.MiddleLeft;
+            btnExchange.UseVisualStyleBackColor = true;
+            btnExchange.Click += new EventHandler(this.btnExchange_Click);
+
+            // 
+            // pnlExchange
+            // 
+            pnlExchange.Dock = DockStyle.Fill;
+            pnlExchange.BackColor = Color.FromArgb(244, 246, 249);
+            pnlExchange.Location = new Point(310, 70);
+            pnlExchange.Name = "pnlExchange";
+            pnlExchange.Size = new Size(1624, 1073);
+            pnlExchange.TabIndex = 2;
+            pnlExchange.Visible = false;
+
             ListBox listBoxCategories = new ListBox();
             listBoxCategories.Dock = DockStyle.Fill;
             listBoxCategories.BackColor = Color.White;
             listBoxCategories.ForeColor = Color.Black;
             pnlCategories.Controls.Add(listBoxCategories);
+
+            pnlUsers = new Panel();
+            pnlUsers.Dock = DockStyle.Fill;
+            pnlUsers.BackColor = Color.FromArgb(244, 246, 249);
+            pnlUsers.Location = new Point(310, 70);
+            pnlUsers.Name = "pnlUsers";
+            pnlUsers.Size = new Size(1624, 1073);
+            pnlUsers.TabIndex = 4;
+            pnlUsers.Visible = false;
+            Controls.Add(pnlUsers);
 
 
             // 
@@ -182,6 +263,9 @@
             pnlObjects.Visible = false;
 
             _objectListManager = new WinFormsApp.UI.ObjectListManager(pnlObjects);
+            _typeReportListManager = new WinFormsApp.UI.TypeReportListScreen(pnlTypeReport);
+            _exchangeListManager = new WinFormsApp.UI.ExchangeListScreen(pnlExchange);
+
 
             // 
             // btnSettings
@@ -419,7 +503,9 @@
             ClientSize = new Size(1934, 1185);
             Controls.Add(panel2);
             Controls.Add(pnlObjects);
+            Controls.Add(pnlTypeReport);
             Controls.Add(pnlCategories);
+            Controls.Add(pnlExchange);
             Controls.Add(pnlLeft);
             Controls.Add(statusStrip1);
             DoubleBuffered = true;
@@ -449,7 +535,7 @@
         private Button btnMenuBar;
         private Button btnLogoSmall;
         private Button btnHome;
-        private Button btnHelp;
+        private Button btnTypeReport;
         private Button btnSettings;
         private Button btn5;
         private Button btn4;
@@ -460,18 +546,29 @@
         private Panel pnlSearch;
         private Button btnCategories;
         private Panel pnlCategories;
+        private Button btnUsers;
+        private Panel pnlUsers;
         private Button btnObject;
         private Panel pnlObjects;
         private Button btnLogout;
+        private Panel pnlTypeReport;
+        private Button btnExchange;
+        private Panel pnlExchange;
 
-        private async void btnCategories_Click(object sender, EventArgs e)
+        private void HideAllPanels()
         {
-            pnlCategories.Visible = true;
+            pnlCategories.Visible = false;
             pnlObjects.Visible = false;
-            pnlSearch.Visible = false;
+            pnlUsers.Visible = false;
+            pnlExchange.Visible = false;
+            pnlTypeReport.Visible = false;
+        }
 
+        private void btnCategories_Click(object sender, EventArgs e)
+        {
+            HideAllPanels();
+            pnlCategories.Visible = true;
             pnlCategories.Controls.Clear();
-
             var categoryListControl = new WinFormsApp.UI.CategoryListControl();
             categoryListControl.Dock = DockStyle.Fill;
             pnlCategories.Controls.Add(categoryListControl);
@@ -480,11 +577,36 @@
         // Liste des Objets
         private async void btnObject_Click(object sender, EventArgs e)
         {
+            HideAllPanels();
             pnlObjects.Visible = true;
-            pnlCategories.Visible = false;
-            pnlSearch.Visible = true;
             await _objectListManager.LoadObjectsAsync();
         }
       
+
+      private void btnUsers_Click(object sender, EventArgs e)
+        {
+            HideAllPanels();
+            pnlUsers.Visible = true;
+
+            pnlUsers.Controls.Clear();
+
+            var userListControl = new WinFormsApp.UI.UserListControl();
+            userListControl.Dock = DockStyle.Fill;
+            pnlUsers.Controls.Add(userListControl);
+        }
+      
+        private async void btnTypeReport_Click(object sender, EventArgs e)
+        {
+            HideAllPanels();
+            pnlTypeReport.Visible = true;
+            await _typeReportListManager.LoadTypeReportsAsync();
+        }
+
+        private async void btnExchange_Click(object sender, EventArgs e)
+        {
+            HideAllPanels();
+            pnlExchange.Visible = true;
+            await _exchangeListManager.LoadExchangesAsync();
+        }
     }
 }

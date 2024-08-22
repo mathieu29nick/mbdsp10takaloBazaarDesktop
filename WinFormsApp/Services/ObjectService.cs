@@ -105,6 +105,80 @@ namespace WinFormsApp.Services
             }
             }
 
+        public async Task<Models.Object> GetObjectByIdAsync(int objectId)
+        {
+            try
+            {
+                string url = $"{Configuration.Configuration.URL}/object/{objectId}";
+                HttpResponseMessage response = await _httpClient.GetAsync(url);
+
+                response.EnsureSuccessStatusCode();
+                string responseBody = await response.Content.ReadAsStringAsync();
+                
+                var responseData = JsonSerializer.Deserialize<Models.Object>(responseBody, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
+
+                if (responseData == null)
+                {
+                    MessageBox.Show("Problème de désérialisation ou structure de données inattendue.");
+                    return null;
+                }
+
+                return responseData;
+            }
+            catch (HttpRequestException e)
+            {
+                MessageBox.Show($"Erreur de requête : {e.Message}");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur : {ex.Message}");
+                return null;
+            }
         }
+
+
+
+        public async Task<bool> UpdateObjectAsync(int objectId, Models.Object updatedObject)
+        {
+            try
+            {
+                string url = $"{Configuration.Configuration.URL}/objects/{objectId}";
+
+                var jsonObject = new
+                {
+                    name = updatedObject.Name,
+                    description = updatedObject.Description,
+                    category_id = updatedObject.CategoryId,
+                    image_file = updatedObject.Image
+                };
+
+                string json = JsonSerializer.Serialize(jsonObject);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await _httpClient.PutAsync(url, content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    string errorResponse = await response.Content.ReadAsStringAsync();
+                    MessageBox.Show($"Erreur lors de la modification de l'objet : {errorResponse}");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors de la modification de l'objet : {ex.Message}");
+                return false;
+            }
+        }
+
+    }
 
 }

@@ -10,6 +10,7 @@ namespace WinFormsApp.Models.ApiResponse
     public class ObjectResponse
     {
         public ObjectData Data { get; set; }
+        public Models.Object SingleObject { get; set; }
     }
 
     [Serializable]
