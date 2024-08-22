@@ -1,15 +1,41 @@
 using static System.Net.Mime.MediaTypeNames;
 using System.Windows.Forms;
 using WinFormsApp.Helpers;
+using WinFormsApp.Services;
 
 namespace WinFormsApp
 {
     public partial class frmMain : Form
     {
+        private readonly AuthenticationService _authService;
+
         public frmMain()
         {
             InitializeComponent();
+            var interceptor = new Interceptor(new HttpClientHandler());
+            _authService = new AuthenticationService(interceptor);
         }
+
+        // Méthode pour gérer le clic sur le bouton de déconnexion
+        private async void btnLogout_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Appeler le service pour effectuer la déconnexion
+                await _authService.Logout();
+                MessageBox.Show("Vous avez été déconnecté.");
+
+                // Après la déconnexion, revenir à l'écran de connexion
+                var loginForm = new frmLogin();
+                loginForm.Show();
+                this.Hide();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors de la déconnexion : {ex.Message}");
+            }
+        }
+
         private void frmMain_Load(object sender, EventArgs e)
         {
             PlaceHolder.SetPlaceHolder(tbSearch.Handle, "Search");

@@ -4,75 +4,70 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using WinFormsApp.Models;
+using WinFormsApp.Configuration;
 
 namespace WinFormsApp.Services
 {
     public class AuthenticationService
     {
         private readonly HttpClient _httpClient;
-        private readonly SessionService _sessionService;
+        private readonly Interceptor _interceptor;
 
-        public AuthenticationService(HttpClient httpClient, SessionService sessionService)
+        public AuthenticationService(Interceptor interceptor)
         {
-            _httpClient = httpClient;
-            _sessionService = sessionService;
+            _httpClient = HttpClientFactory.Instance;
+            _interceptor = interceptor;
         }
 
         public async Task<bool> Login(string username, string password)
-        {
-            var url = $"{Configuration.Configuration.URL}/auth/admin/login";
-            var payload = new { username, password };
-            var content = new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
-
-            try
             {
-                var response = await _httpClient.PostAsync(url, content);
+                var url = $"{Configuration.Configuration.URL}/auth/admin/login";
+                var payload = new { username, password };
+                var content = new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
 
-                if (response.IsSuccessStatusCode)
+                try
                 {
-                    var json = await response.Content.ReadAsStringAsync();
-                    var jsonNode = JsonDocument.Parse(json).RootElement;
+                    var response = await _httpClient.PostAsync(url, content);
 
-                    var token = jsonNode.GetProperty("admin").GetProperty("token").GetString();
-                    var userId = jsonNode.GetProperty("admin").GetProperty("id").GetInt32();
-
-                    _sessionService.SetToken(token);
-
-                    var user = new User
+                    if (response.IsSuccessStatusCode)
                     {
-                        Id = userId,
-                        Username = username
-                        // Populate other fields if necessary
-                    };
+                        var json = await response.Content.ReadAsStringAsync();
+                        var jsonNode = JsonDocument.Parse(json).RootElement;
 
-                    _sessionService.SetUser(user);
+                        var token = jsonNode.GetProperty("admin").GetProperty("token").GetString();
+                        _interceptor.SetToken(token);
 
-                    return true;
+                        // Store the token in the configuration
+                        Configuration.Configuration.TOKKEN = token;
+
+                        return true;
+                    }
+                    else
+                    {
+                        var errorMessage = await ExtractErrorMessage(response);
+                        throw new Exception(errorMessage);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    var errorMessage = await ExtractErrorMessage(response);
-                    throw new Exception(errorMessage);
+                    throw new Exception($"An error occurred during login: {ex.Message}", ex);
                 }
             }
-            catch (Exception ex)
-            {
-                throw new Exception($"An error occurred during login: {ex.Message}", ex);
-            }
-        }
 
-        public async Task Logout()
-        {
-            var url = $"{Configuration.Configuration.URL}/auth/logout";
-            try
+            public async Task Logout()
             {
-                await _httpClient.PostAsync(url, null);
+                var url = $"{Configuration.Configuration.URL}/auth/logout";
+                try
+                {
+                    await _httpClient.PostAsync(url, null);
+                }
+                finally
+                {
+                    _interceptor.SetToken(string.Empty);
+                    Configuration.Configuration.TOKKEN = string.Empty;
+                }
             }
-            finally
-            {
-                _sessionService.ClearSession();
-            }
-        }
+
 
         private async Task<string> ExtractErrorMessage(HttpResponseMessage response)
         {

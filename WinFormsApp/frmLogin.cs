@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
 using WinFormsApp.Services;
 
@@ -18,14 +13,28 @@ namespace WinFormsApp
         public frmLogin()
         {
             InitializeComponent();
-            var httpClient = new HttpClient(new TokenHandler(new SessionService()));
-            _authService = new AuthenticationService(httpClient, new SessionService());
+            var interceptor = new Interceptor(new HttpClientHandler());
+            _authService = new AuthenticationService(interceptor);
+
+            // Charger l'image de fond à partir des ressources intégrées
+            try
+            {
+                pictureBox1.BackgroundImage = WinFormsApp.Properties.Resources.takalo; 
+                pictureBox1.BackgroundImageLayout = ImageLayout.Stretch; 
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors du chargement de l'image: {ex.Message}");
+            }
         }
 
         private async void btnLogin_Click(object sender, EventArgs e)
         {
             var username = textBox1.Text;
             var password = textBox2.Text;
+
+            // Afficher le ProgressBar lors du début de la connexion
+            progressBarLoading.Visible = true;
 
             try
             {
@@ -34,27 +43,23 @@ namespace WinFormsApp
                 if (authenticated)
                 {
                     MessageBox.Show("Login successful!");
-                    // You can either close the form or redirect to another form
-                    this.Hide();
+                    this.DialogResult = DialogResult.OK; 
+                    this.Close(); 
                 }
                 else
                 {
-                    MessageBox.Show("Unexpected error. Please contact support if this persists.");
+                    MessageBox.Show("Unexpected error. Please contact support si cela persiste.");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Login error: {ex.Message}");
+                MessageBox.Show($"Erreur de connexion: {ex.Message}");
             }
-        }
-
-        private async void btnLogout_Click(object sender, EventArgs e)
-        {
-            await _authService.Logout();
-            MessageBox.Show("You have been logged out.");
-            textBox1.Clear();
-            textBox2.Clear();
-            this.Show();
+            finally
+            {
+                // Masquer le ProgressBar après la fin de la tentative de connexion
+                progressBarLoading.Visible = false;
+            }
         }
     }
 }

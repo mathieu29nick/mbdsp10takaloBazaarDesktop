@@ -30,6 +30,7 @@
             btn1 = new Button();
             btnObject = new Button();
             btnHome = new Button();
+            btnLogout = new Button();
             pnlSearch = new Panel();
             pnlObjects = new Panel();
             tbSearch = new Custom_Controls.RoundTB();
@@ -52,6 +53,7 @@
             // 
             pnlLeft.AutoScroll = true;
             pnlLeft.BackColor = Color.FromArgb(73, 78, 83);
+             pnlLeft.Controls.Add(btnLogout);
             pnlLeft.Controls.Add(btnHelp);
             pnlLeft.Controls.Add(btnCategories);
             pnlLeft.Controls.Add(btnObject);
@@ -69,6 +71,27 @@
             pnlLeft.Name = "pnlLeft";
             pnlLeft.Size = new Size(310, 1143);
             pnlLeft.TabIndex = 0;
+
+            // 
+            // btnLogout
+            // 
+            btnLogout.Dock = DockStyle.Top;
+            btnLogout.FlatAppearance.BorderSize = 0;
+            btnLogout.FlatStyle = FlatStyle.Flat;
+            btnLogout.ForeColor = ColorTranslator.FromHtml("#bc8246");
+            btnLogout.Location = new Point(0, 759);
+            btnLogout.Name = "btnLogout";
+            btnLogout.Padding = new Padding(0); 
+            btnLogout.Size = new Size(310, 70);
+            btnLogout.TabIndex = 3;
+            btnLogout.Tag = "          Logout";
+            btnLogout.Text = "Déconnexion";
+            btnLogout.TextAlign = ContentAlignment.MiddleCenter;
+            btnLogout.Font = new Font(btnLogout.Font.FontFamily, 11, FontStyle.Bold);
+            btnLogout.UseVisualStyleBackColor = true;
+            btnLogout.Click += new EventHandler(this.btnLogout_Click); 
+
+
 
             // 
             // btnHelp
@@ -439,6 +462,7 @@
         private Panel pnlCategories;
         private Button btnObject;
         private Panel pnlObjects;
+        private Button btnLogout;
 
         private async void btnCategories_Click(object sender, EventArgs e)
         {
@@ -461,5 +485,6 @@
             pnlSearch.Visible = true;
             await _objectListManager.LoadObjectsAsync();
         }
+      
     }
 }

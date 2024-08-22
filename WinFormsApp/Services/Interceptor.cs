@@ -11,7 +11,10 @@ namespace WinFormsApp.Services
 
         public Interceptor(HttpMessageHandler innerHandler) : base(innerHandler)
         {
-            _token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFzbWl0aEBleGFtcGxlLmNvbSIsImlkIjo1MSwiZmlyc3RfbmFtZSI6IkFsaWNlIiwibGFzdF9uYW1lIjoiQWxpY2UiLCJ1c2VybmFtZSI6ImFzbWl0aCIsInByb2ZpbGVfcGljdHVyZSI6Imh0dHBzOi8vcmFuZG9tdXNlci5tZS9hcGkvcG9ydHJhaXRzL3dvbWVuLzEuanBnIiwidHlwZSI6IkFETUlOIiwianRpIjoiNTEtMTcyNDEwMjg3MDk3NyIsImlhdCI6MTcyNDEwMjg3MCwiZXhwIjoxNzI0Mjc1NjcwfQ._0bw9bXIFF6twJtoecXFNFf4LNFbc0QkEvoPnau5-UM";
+            /*            _token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFzbWl0aEBleGFtcGxlLmNvbSIsImlkIjo1MSwiZmlyc3RfbmFtZSI6IkFsaWNlIiwibGFzdF9uYW1lIjoiQWxpY2UiLCJ1c2VybmFtZSI6ImFzbWl0aCIsInByb2ZpbGVfcGljdHVyZSI6Imh0dHBzOi8vcmFuZG9tdXNlci5tZS9hcGkvcG9ydHJhaXRzL3dvbWVuLzEuanBnIiwidHlwZSI6IkFETUlOIiwianRpIjoiNTEtMTcyNDEwMjg3MDk3NyIsImlhdCI6MTcyNDEwMjg3MCwiZXhwIjoxNzI0Mjc1NjcwfQ._0bw9bXIFF6twJtoecXFNFf4LNFbc0QkEvoPnau5-UM";
+            */
+            _token = string.Empty;
+
         }
 
         public void SetToken(string token)

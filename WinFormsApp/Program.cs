@@ -15,9 +15,25 @@ namespace WinFormsApp
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
-            AllocConsole();
             ApplicationConfiguration.Initialize();
-            Application.Run(new frmLogin());
+            AllocConsole();
+
+            // Afficher le formulaire de connexion
+            using (var loginForm = new frmLogin())
+            {
+                var result = loginForm.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    // Si la connexion est réussie, lancer le formulaire principal
+                    Application.Run(new frmMain());
+                }
+                else
+                {
+                    // Si la connexion échoue ou si l'utilisateur ferme le formulaire de connexion
+                    Application.Exit();
+                }
+            }
+
             FreeConsole();
         }
     }
