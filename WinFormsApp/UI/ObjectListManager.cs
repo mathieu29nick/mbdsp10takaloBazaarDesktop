@@ -17,6 +17,10 @@ namespace WinFormsApp.UI
         private int _currentPage = 1;
         private int _pageSize = 30;
 
+        private int totalPage = 1;
+        private Button previousButton;
+        private Button nextButton;
+
         public ObjectListManager(Panel panel)
         {
             _panel = panel;
@@ -94,15 +98,15 @@ namespace WinFormsApp.UI
                 Margin = new Padding(0)
             };
 
-            Button previousButton = new Button { Text = "Précédent", Width = 150, Height = 50, BackColor = ColorTranslator.FromHtml("#8a8f6a"), ForeColor = Color.White };
-            Button nextButton = new Button { Text = "Suivant", Width = 150, Height = 50, BackColor = ColorTranslator.FromHtml("#8a8f6a"), ForeColor = Color.White };
+            previousButton = new Button { Text = "Précédent", Width = 150, Height = 50, BackColor = ColorTranslator.FromHtml("#8a8f6a"), ForeColor = Color.White };
+            nextButton = new Button { Text = "Suivant", Width = 150, Height = 50, BackColor = ColorTranslator.FromHtml("#8a8f6a"), ForeColor = Color.White };
 
             searchButton.Click += async (sender, e) =>
             {
                 _currentPage = 1;
                 string selectedText = statusComboBox.SelectedItem?.ToString();
                 string selectedStatus = statusItems.ContainsKey(selectedText) ? statusItems[selectedText] : "";
-                await LoadObjectsAsync(_currentPage, _pageSize, searchTextBox1.Text, searchTextBox3.Text, (int?)categoryComboBox.SelectedValue, selectedStatus, previousButton, nextButton);
+                await LoadObjectsAsync(_currentPage, _pageSize, searchTextBox1.Text, searchTextBox3.Text, (int?)categoryComboBox.SelectedValue, selectedStatus);
             };
 
             Button addButton = new Button
@@ -148,7 +152,7 @@ namespace WinFormsApp.UI
                     _currentPage--;
                     string selectedText = statusComboBox.SelectedItem?.ToString();
                     string selectedStatus = statusItems.ContainsKey(selectedText) ? statusItems[selectedText] : "";
-                    await LoadObjectsAsync(_currentPage, _pageSize, searchTextBox1.Text, searchTextBox3.Text, (int?)categoryComboBox.SelectedValue, selectedStatus, previousButton, nextButton);
+                    await LoadObjectsAsync(_currentPage, _pageSize, searchTextBox1.Text, searchTextBox3.Text, (int?)categoryComboBox.SelectedValue, selectedStatus);
                 }
             };
 
@@ -157,7 +161,7 @@ namespace WinFormsApp.UI
                 _currentPage++;
                 string selectedText = statusComboBox.SelectedItem?.ToString();
                 string selectedStatus = statusItems.ContainsKey(selectedText) ? statusItems[selectedText] : "";
-                await LoadObjectsAsync(_currentPage, _pageSize, searchTextBox1.Text, searchTextBox3.Text, (int?)categoryComboBox.SelectedValue, selectedStatus, previousButton, nextButton);
+                await LoadObjectsAsync(_currentPage, _pageSize, searchTextBox1.Text, searchTextBox3.Text, (int?)categoryComboBox.SelectedValue, selectedStatus);
             };
 
             paginationPanel.Controls.Add(previousButton);
@@ -252,20 +256,22 @@ namespace WinFormsApp.UI
             }
         }
 
-        public async Task LoadObjectsAsync(int page = 1, int limit = 30, string name = null, string description = null, int? categoryId = null, string status = null, Button previousButton = null, Button nextButton = null)
+        public async Task LoadObjectsAsync(int page = 1, int limit = 30, string name = null, string description = null, int? categoryId = null, string status = null)
         {
             try
             {
-                List<Models.Object> objects = await _objectService.GetObjectsAsync(page, limit, name, description, null, categoryId, status);
+                ObjectResponse response = await _objectService.GetObjectsAsync(page, limit, name, description, null, categoryId, status);
+                List<Models.Object> rep = response.Data.Objects;
 
-                if (objects == null || objects.Count == 0)
+                if (rep == null || rep.Count == 0)
                 {
                     MessageBox.Show("Aucun objet trouvé.");
                     _dataGridView.DataSource = null;
                 }
                 else
                 {
-                    _dataGridView.DataSource = objects;
+                    _dataGridView.DataSource = rep;
+                    totalPage = response.Data.TotalPages ?? totalPage;
                 }
 
                 if (previousButton != null)
@@ -275,7 +281,7 @@ namespace WinFormsApp.UI
 
                 if (nextButton != null)
                 {
-                    nextButton.Visible = objects.Count == limit;
+                    nextButton.Visible = _currentPage != response.Data.TotalPages;
                 }
             }
             catch (Exception ex)

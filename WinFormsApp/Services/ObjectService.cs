@@ -19,7 +19,7 @@ namespace WinFormsApp.Services
             _httpClient = HttpClientFactory.Instance;
         }
 
-        public async Task<List<Models.Object>> GetObjectsAsync(int page, int limit, string name = null, string description = null, int? userId = null, int? categoryId = null, string status = null)
+        public async Task<ObjectResponse> GetObjectsAsync(int page, int limit, string name = null, string description = null, int? userId = null, int? categoryId = null, string status = null)
         {
             try
             {
@@ -56,14 +56,15 @@ namespace WinFormsApp.Services
                     {
                         obj.CategoryName = obj.Category?.Name;
                     }
+                    return responseData;
                 }
 
-                return responseData?.Data?.Objects ?? new List<Models.Object>();
+                return new ObjectResponse();
             }
             catch (HttpRequestException e)
             {
                 MessageBox.Show($"Request error: {e.Message}");
-                return new List<Models.Object>();
+                return null;
             }
         }
 
