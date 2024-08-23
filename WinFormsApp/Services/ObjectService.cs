@@ -180,6 +180,38 @@ namespace WinFormsApp.Services
             }
         }
 
+        public async Task<bool> DeleteObjectAsync(int objectId)
+        {
+            try
+            {
+                string url = $"{Configuration.Configuration.URL}/object/{objectId}";
+
+                HttpResponseMessage response = await _httpClient.DeleteAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    string errorResponse = await response.Content.ReadAsStringAsync();
+                    MessageBox.Show($"Erreur lors de la suppression de l'objet : {errorResponse}");
+                    return false;
+                }
+            }
+            catch (HttpRequestException e)
+            {
+                MessageBox.Show($"Erreur de requête : {e.Message}");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur : {ex.Message}");
+                return false;
+            }
+        }
+
+
     }
 
 }

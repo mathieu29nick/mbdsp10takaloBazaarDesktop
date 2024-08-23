@@ -232,7 +232,7 @@ namespace WinFormsApp.UI
             PopulateCategoryComboBoxAsync(categoryComboBox).ConfigureAwait(false);
         }
 
-        private void DataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        private async void DataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
@@ -246,7 +246,26 @@ namespace WinFormsApp.UI
                
                 else if (_dataGridView.Columns[e.ColumnIndex].Name == "DeleteButton")
                 {
-                    // onDelete
+                    int objectId = (int)_dataGridView.Rows[e.RowIndex].Cells["Id"].Value;
+
+                    var confirmationResult = MessageBox.Show("Êtes-vous sûr de vouloir supprimer cet objet ?",
+                                                             "Confirmation de suppression",
+                                                             MessageBoxButtons.YesNo);
+
+                    if (confirmationResult == DialogResult.Yes)
+                    {
+                        bool deleteSuccess = await _objectService.DeleteObjectAsync(objectId);
+
+                        if (deleteSuccess)
+                        {
+                            MessageBox.Show("Objet supprimé avec succès.");
+                            await LoadObjectsAsync(_currentPage, _pageSize);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Erreur lors de la suppression de l'objet.");
+                        }
+                    }
                 }
                 else if (_dataGridView.Columns[e.ColumnIndex].Name == "DetailButton")
                 {
