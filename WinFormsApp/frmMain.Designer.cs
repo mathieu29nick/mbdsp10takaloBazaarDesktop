@@ -1,4 +1,6 @@
-﻿namespace WinFormsApp
+﻿using WinFormsApp.UI;
+
+namespace WinFormsApp
 {
     partial class frmMain
     {
@@ -6,6 +8,7 @@
         private WinFormsApp.UI.ObjectListManager _objectListManager;
         private WinFormsApp.UI.TypeReportListScreen _typeReportListManager;
         private WinFormsApp.UI.ExchangeListScreen _exchangeListManager;
+        private DashboardScreen _dashboardControl;
 
         protected override void Dispose(bool disposing)
         {
@@ -26,7 +29,7 @@
             btnCategories = new Button();
             btnSettings = new Button();
             btn5 = new Button();
-            btn4 = new Button();
+            btnDashboard = new Button();
             btn3 = new Button();
             btn2 = new Button();
             btn1 = new Button();
@@ -37,6 +40,7 @@
             pnlSearch = new Panel();
             pnlObjects = new Panel();
             pnlTypeReport = new Panel();
+            pnlDashboard = new Panel();
             tbSearch = new Custom_Controls.RoundTB();
             panel3 = new Panel();
             btnLogoSmall = new Button();
@@ -65,7 +69,7 @@
             pnlLeft.Controls.Add(btnExchange);
             pnlLeft.Controls.Add(btnSettings);
             pnlLeft.Controls.Add(btn5);
-            pnlLeft.Controls.Add(btn4);
+            pnlLeft.Controls.Add(btnDashboard);
             pnlLeft.Controls.Add(btn3);
             pnlLeft.Controls.Add(btn2);
             pnlLeft.Controls.Add(btn1);
@@ -240,6 +244,7 @@
             _objectListManager = new WinFormsApp.UI.ObjectListManager(pnlObjects);
             _typeReportListManager = new WinFormsApp.UI.TypeReportListScreen(pnlTypeReport);
             _exchangeListManager = new WinFormsApp.UI.ExchangeListScreen(pnlExchange);
+            _dashboardControl = new DashboardScreen(pnlDashboard);
 
 
             // 
@@ -281,23 +286,36 @@
             btn5.UseVisualStyleBackColor = true;
 
             // 
-            // btn4
+            // btnDashboard
             // 
-            btn4.Dock = DockStyle.Top;
-            btn4.FlatAppearance.BorderSize = 0;
-            btn4.FlatStyle = FlatStyle.Flat;
-            btn4.ForeColor = Color.White;
-            btn4.Image = (Image)resources.GetObject("btn4.Image");
-            btn4.ImageAlign = ContentAlignment.MiddleLeft;
-            btn4.Location = new Point(250, 339);
-            btn4.Name = "btn4";
-            btn4.Padding = new Padding(20, 0, 0, 0);
-            btn4.Size = new Size(310, 70);
-            btn4.TabIndex = 1;
-            btn4.Tag = "          Button 4";
-            btn4.Text = "          Button 4";
-            btn4.TextAlign = ContentAlignment.MiddleLeft;
-            btn4.UseVisualStyleBackColor = true;
+            btnDashboard.Dock = DockStyle.Top;
+            btnDashboard.FlatAppearance.BorderSize = 0;
+            btnDashboard.FlatStyle = FlatStyle.Flat;
+            btnDashboard.ForeColor = Color.White;
+            btnDashboard.Image = (Image)resources.GetObject("btn4.Image");
+            btnDashboard.ImageAlign = ContentAlignment.MiddleLeft;
+            btnDashboard.Location = new Point(250, 339);
+            btnDashboard.Name = "Dashboard";
+            btnDashboard.Padding = new Padding(20, 0, 0, 0);
+            btnDashboard.Size = new Size(310, 70);
+            btnDashboard.TabIndex = 1;
+            btnDashboard.Tag = "         Dashboard";
+            btnDashboard.Text = "          Dashboard";
+            btnDashboard.TextAlign = ContentAlignment.MiddleLeft;
+            btnDashboard.UseVisualStyleBackColor = true;
+            btnDashboard.Click += btnDashboard_Click;
+
+
+            // 
+            // pnlDashboard
+            // 
+            pnlDashboard.Dock = DockStyle.Fill;
+            pnlDashboard.BackColor = Color.FromArgb(244, 246, 249);
+            pnlDashboard.Location = new Point(310, 70);
+            pnlDashboard.Name = "pnlDashboard";
+            pnlDashboard.Size = new Size(1624, 1073);
+            pnlDashboard.TabIndex = 2;
+            pnlDashboard.Visible = true;
 
             // 
             // btn3
@@ -479,6 +497,7 @@
             Controls.Add(panel2);
             Controls.Add(pnlObjects);
             Controls.Add(pnlTypeReport);
+            Controls.Add(pnlDashboard);
             Controls.Add(pnlCategories);
             Controls.Add(pnlExchange);
             Controls.Add(pnlLeft);
@@ -513,7 +532,7 @@
         private Button btnTypeReport;
         private Button btnSettings;
         private Button btn5;
-        private Button btn4;
+        private Button btnDashboard;
         private Button btn3;
         private Button btn2;
         private Button btn1;
@@ -528,6 +547,7 @@
         private Panel pnlTypeReport;
         private Button btnExchange;
         private Panel pnlExchange;
+        private Panel pnlDashboard;
 
         private void HideAllPanels()
         {
@@ -536,6 +556,8 @@
             pnlUsers.Visible = false;
             pnlExchange.Visible = false;
             pnlTypeReport.Visible = false;
+            pnlSearch.Visible = false;
+            pnlDashboard.Visible = false;
         }
 
         private void btnCategories_Click(object sender, EventArgs e)
@@ -560,7 +582,6 @@
         {
             HideAllPanels();
             pnlUsers.Visible = true;
-
             pnlUsers.Controls.Clear();
 
             var userListControl = new WinFormsApp.UI.UserListControl();
@@ -572,6 +593,7 @@
         {
             HideAllPanels();
             pnlTypeReport.Visible = true;
+            pnlDashboard.Visible = false;
             await _typeReportListManager.LoadTypeReportsAsync();
         }
 
@@ -580,6 +602,13 @@
             HideAllPanels();
             pnlExchange.Visible = true;
             await _exchangeListManager.LoadExchangesAsync();
+        }
+
+        private async void btnDashboard_Click(object sender, EventArgs e)
+        {
+            HideAllPanels();
+            pnlDashboard.Visible = true;
+            _dashboardControl.LoadDashboard();
         }
     }
 }

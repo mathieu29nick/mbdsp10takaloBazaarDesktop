@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace WinFormsApp.Models
 {
@@ -22,7 +20,9 @@ namespace WinFormsApp.Models
         {
             public int Id { get; set; }
             public string Name { get; set; }
-            public int ObjectCount { get; set; }
+
+            [JsonPropertyName("object_count")]
+            public string ObjectCount { get; set; } 
         }
 
         [Serializable]
@@ -30,15 +30,22 @@ namespace WinFormsApp.Models
         {
             public string Type { get; set; }
             public string Period { get; set; }
-            public int ExchangeCount { get; set; }
+
+            [JsonPropertyName("exchange_count")]
+            public string ExchangeCount { get; set; } 
         }
 
         [Serializable]
         public class ExchangeByUser
         {
+            [JsonPropertyName("user_id")]
             public int UserId { get; set; }
+
             public string Username { get; set; }
-            public int ExchangeCount { get; set; }
+
+            [JsonPropertyName("exchange_count")]
+            public string ExchangeCount { get; set; } 
+
             public double Percentage { get; set; }
         }
     }
