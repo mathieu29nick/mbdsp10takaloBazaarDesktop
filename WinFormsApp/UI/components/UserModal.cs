@@ -291,30 +291,29 @@ namespace WinFormsApp.UI
 
             // 
             // btnSave
-            // 
             this.btnSave.Location = new Point(20, 570);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new Size(130, 40);
             this.btnSave.Text = "Enregistrer";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.BackColor = Color.FromArgb(56, 56, 56);
+            this.btnSave.UseVisualStyleBackColor = false;
+            this.btnSave.BackColor = Color.FromArgb(188, 130, 70);
             this.btnSave.ForeColor = Color.White;
             this.btnSave.FlatStyle = FlatStyle.Flat;
             this.btnSave.Font = new Font("Segoe UI", 12, FontStyle.Bold);
             this.btnSave.Click += new EventHandler(this.btnSave_Click);
 
-            // 
             // btnCancel
-            // 
             this.btnCancel.Location = new Point(160, 570);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new Size(130, 40);
             this.btnCancel.Text = "Annuler";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.BackColor = Color.LightGray;
+            this.btnCancel.UseVisualStyleBackColor = false;
+            this.btnCancel.BackColor = Color.FromArgb(56, 56, 56);
+            this.btnCancel.ForeColor = Color.White;
             this.btnCancel.FlatStyle = FlatStyle.Flat;
-            this.btnCancel.Font = new Font("Segoe UI", 12);
+            this.btnCancel.Font = new Font("Segoe UI", 12, FontStyle.Bold);
             this.btnCancel.Click += new EventHandler(this.btnCancel_Click);
+
 
             // 
             // UserModal

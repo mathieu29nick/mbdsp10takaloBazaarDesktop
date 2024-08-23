@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -36,37 +35,17 @@ namespace WinFormsApp.UI
 
             var categoryService = new CategoryService();
             var response = await categoryService.GetCategoriesAsync(_currentPage, PageSize, searchQuery);
-            Console.WriteLine(response.Data.CurrentPage);
 
             _totalPages = response.Data.TotalPages ?? 1;
             _currentPage = response.Data.CurrentPage ?? 1;
 
             UpdatePaginationControls();
 
-            listViewCategories.Items.Clear();
+            dgvCategories.Rows.Clear();
 
             foreach (var category in response.Data.Categories)
             {
-                var listItem = new ListViewItem(category.Id.ToString());
-                listItem.SubItems.Add(category.Name);
-
-                // Add an empty subitem for the Edit column
-                var editSubItem = new ListViewItem.ListViewSubItem();
-                editSubItem.Text = "Edit";
-                editSubItem.Tag = category.Id;
-                editSubItem.Font = new Font("Segoe UI", 10, FontStyle.Underline);
-                editSubItem.ForeColor = Color.Blue;
-                listItem.SubItems.Add(editSubItem);
-
-                // Add an empty subitem for the Delete column
-                var deleteSubItem = new ListViewItem.ListViewSubItem();
-                deleteSubItem.Text = "Delete";
-                deleteSubItem.Tag = category.Id;
-                deleteSubItem.Font = new Font("Segoe UI", 10, FontStyle.Underline);
-                deleteSubItem.ForeColor = Color.Red;
-                listItem.SubItems.Add(deleteSubItem);
-
-                listViewCategories.Items.Add(listItem);
+                dgvCategories.Rows.Add(category.Id, category.Name);
             }
 
             ShowLoading(false);
@@ -84,12 +63,19 @@ namespace WinFormsApp.UI
                     Text = pageNumber.ToString(),
                     Size = new Size(40, 30),
                     Margin = new Padding(2),
-                    BackColor = pageNumber == _currentPage ? Color.FromArgb(56, 56, 56) : Color.White,
-                    ForeColor = pageNumber == _currentPage ? Color.White : Color.Black,
                     FlatStyle = FlatStyle.Flat,
                     Font = new Font("Segoe UI", 10, FontStyle.Regular),
                     Enabled = pageNumber != _currentPage
                 };
+                btnPageNumber.ForeColor = pageNumber == _currentPage ? Color.White : ColorTranslator.FromHtml("#383838");
+                btnPageNumber.BackColor = pageNumber == _currentPage ? ColorTranslator.FromHtml("#bc8246") : Color.White;
+                btnPageNumber.Paint += (s, e) =>
+                {
+                    var btn = (Button)s;
+                    e.Graphics.Clear(btn.BackColor);
+                    TextRenderer.DrawText(e.Graphics, btn.Text, btn.Font, e.ClipRectangle, btn.ForeColor, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+                };
+
                 if (pageNumber != _currentPage)
                 {
                     btnPageNumber.Click += async (s, e) =>
@@ -111,7 +97,7 @@ namespace WinFormsApp.UI
         private void ShowLoading(bool show)
         {
             loadingLabel.Visible = show;
-            listViewCategories.Visible = !show;
+            dgvCategories.Visible = !show;
         }
 
         private void btnInsert_Click(object sender, EventArgs e)
@@ -162,11 +148,7 @@ namespace WinFormsApp.UI
         private void InitializeComponent()
         {
             this.lblTitle = new Label();
-            this.listViewCategories = new ListView();
-            this.colId = new ColumnHeader();
-            this.colName = new ColumnHeader();
-            this.colEdit = new ColumnHeader();
-            this.colDelete = new ColumnHeader();
+            this.dgvCategories = new DataGridView();
             this.tbSearch = new TextBox();
             this.btnSearch = new Button();
             this.btnInsert = new Button();
@@ -178,57 +160,32 @@ namespace WinFormsApp.UI
             // 
             // lblTitle
             // 
-            this.lblTitle.Text = "Liste catégories";
+            this.lblTitle.Text = "Liste des catégories";
             this.lblTitle.Font = new Font("Segoe UI", 18, FontStyle.Bold);
             this.lblTitle.Location = new Point(0, 60); // Adjusted to appear below the nav
             this.lblTitle.Size = new Size(1024, 40);
             this.lblTitle.TextAlign = ContentAlignment.MiddleCenter;
 
             // 
-            // listViewCategories
+            // dgvCategories
             // 
-            this.listViewCategories.Columns.AddRange(new ColumnHeader[] {
-            this.colId,
-            this.colName,
-            this.colEdit,
-            this.colDelete});
-            this.listViewCategories.FullRowSelect = true;
-            this.listViewCategories.GridLines = true;
-            this.listViewCategories.Location = new Point(50, 170);
-            this.listViewCategories.Name = "listViewCategories";
-            this.listViewCategories.Size = new Size(1000, 350);
-            this.listViewCategories.TabIndex = 0;
-            this.listViewCategories.UseCompatibleStateImageBehavior = false;
-            this.listViewCategories.View = View.Details;
-            this.listViewCategories.BackColor = Color.WhiteSmoke;
-            this.listViewCategories.BorderStyle = BorderStyle.None;
-            this.listViewCategories.Scrollable = false;
-
-            this.listViewCategories.MouseClick += ListViewCategories_MouseClick;
-
-            // 
-            // colId
-            // 
-            this.colId.Text = "ID";
-            this.colId.Width = 100;
-
-            // 
-            // colName
-            // 
-            this.colName.Text = "Nom";
-            this.colName.Width = 600;
-
-            // 
-            // colEdit
-            // 
-            this.colEdit.Text = "";
-            this.colEdit.Width = 100;
-
-            // 
-            // colDelete
-            // 
-            this.colDelete.Text = "";
-            this.colDelete.Width = 100;
+            this.dgvCategories.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCategories.Columns.AddRange(new DataGridViewColumn[] {
+        new DataGridViewTextBoxColumn { HeaderText = "ID", Name = "colId", Width = 100 },
+        new DataGridViewTextBoxColumn { HeaderText = "Nom", Name = "colName", Width = 600 },
+        new DataGridViewButtonColumn { HeaderText = "-", Text = "Modifier", Name = "colEdit", Width = 100, UseColumnTextForButtonValue = true },
+        new DataGridViewButtonColumn { HeaderText = "-", Text = "Supprimer", Name = "colDelete", Width = 100, UseColumnTextForButtonValue = true }
+    });
+            this.dgvCategories.Location = new Point(50, 170);
+            this.dgvCategories.Name = "dgvCategories";
+            this.dgvCategories.Size = new Size(1000, 350);
+            this.dgvCategories.TabIndex = 0;
+            this.dgvCategories.CellClick += dgvCategories_CellClick;
+            this.dgvCategories.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            this.dgvCategories.ReadOnly = true;
+            this.dgvCategories.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvCategories.BackgroundColor = Color.White;
+            this.dgvCategories.AllowUserToAddRows = false;
 
             // 
             // tbSearch
@@ -244,11 +201,11 @@ namespace WinFormsApp.UI
             // 
             this.btnSearch.Location = new Point(670, 110);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new Size(140, 40);
+            this.btnSearch.Size = new Size(150, 40);
             this.btnSearch.TabIndex = 2;
             this.btnSearch.Text = "Rechercher";
             this.btnSearch.UseVisualStyleBackColor = true;
-            this.btnSearch.BackColor = Color.FromArgb(56, 56, 56);
+            this.btnSearch.BackColor = ColorTranslator.FromHtml("#bc8246");
             this.btnSearch.ForeColor = Color.White;
             this.btnSearch.FlatStyle = FlatStyle.Flat;
             this.btnSearch.Font = new Font("Segoe UI", 12, FontStyle.Bold);
@@ -257,7 +214,7 @@ namespace WinFormsApp.UI
             // 
             // btnInsert
             // 
-            this.btnInsert.Location = new Point(820, 110);
+            this.btnInsert.Location = new Point(830, 110);
             this.btnInsert.Name = "btnInsert";
             this.btnInsert.Size = new Size(140, 40);
             this.btnInsert.TabIndex = 3;
@@ -296,7 +253,7 @@ namespace WinFormsApp.UI
             this.AutoScaleDimensions = new SizeF(9F, 20F);
             this.AutoScaleMode = AutoScaleMode.Font;
             this.Controls.Add(this.lblTitle);
-            this.Controls.Add(this.listViewCategories);
+            this.Controls.Add(this.dgvCategories);
             this.Controls.Add(this.tbSearch);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.btnInsert);
@@ -309,19 +266,17 @@ namespace WinFormsApp.UI
             this.PerformLayout();
         }
 
-        private async void ListViewCategories_MouseClick(object sender, MouseEventArgs e)
+        private async void dgvCategories_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            var hitTest = listViewCategories.HitTest(e.Location);
-            if (hitTest.Item != null)
+            if (e.RowIndex >= 0)
             {
-                int columnIndex = hitTest.Item.SubItems.IndexOf(hitTest.SubItem);
-                var id = (int)hitTest.Item.SubItems[2].Tag;
+                var id = Convert.ToInt32(dgvCategories.Rows[e.RowIndex].Cells[0].Value);
 
-                if (columnIndex == 2) // Edit column
+                if (e.ColumnIndex == dgvCategories.Columns["colEdit"].Index)
                 {
-                    OpenEditModal(id, hitTest.Item.SubItems[1].Text);
+                    OpenEditModal(id, dgvCategories.Rows[e.RowIndex].Cells[1].Value.ToString());
                 }
-                else if (columnIndex == 3) // Delete column
+                else if (e.ColumnIndex == dgvCategories.Columns["colDelete"].Index)
                 {
                     var result = MessageBox.Show("Êtes-vous sûr de vouloir supprimer cette catégorie ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (result == DialogResult.Yes)
@@ -333,11 +288,7 @@ namespace WinFormsApp.UI
         }
 
         private Label lblTitle;
-        private ListView listViewCategories;
-        private ColumnHeader colId;
-        private ColumnHeader colName;
-        private ColumnHeader colEdit;
-        private ColumnHeader colDelete;
+        private DataGridView dgvCategories;
         private TextBox tbSearch;
         private Button btnSearch;
         private Button btnInsert;
