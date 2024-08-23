@@ -17,7 +17,7 @@ namespace WinFormsApp.Services
             _httpClient = HttpClientFactory.Instance;
         }
 
-        public async Task<List<Exchange>> GetExchangesAsync(int page = 1, int limit = 10, string orderBy = null, string orderDirection = null, Dictionary<string, string> filters = null)
+        public async Task<ExchangeResponse> GetExchangesAsync(int page = 1, int limit = 10, string orderBy = null, string orderDirection = null, Dictionary<string, string> filters = null)
         {
             try
             {
@@ -54,23 +54,23 @@ namespace WinFormsApp.Services
                         exchange.ReceiverUsername = exchange.Receiver?.Username;
                     }
 
-                    return responseData.Exchanges;
+                    return responseData;
                 }
                 else
                 {
                     MessageBox.Show("Aucun échange trouvé ou problème de désérialisation.");
-                    return new List<Exchange>();
+                    return null;
                 }
             }
             catch (HttpRequestException e)
             {
                 MessageBox.Show($"Erreur de requête : {e.Message}");
-                return new List<Exchange>();
+                return null;
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Erreur : {ex.Message}");
-                return new List<Exchange>();
+                return null;
             }
         }
 
