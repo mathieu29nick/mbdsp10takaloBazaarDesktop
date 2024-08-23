@@ -389,6 +389,7 @@ namespace WinFormsApp.UI
                     columnChart.Series.Add(series1);
 
                     //Top User
+                    _dataGridView.Rows.Clear();
                     foreach (var (topUser, index) in dashboardData.ExchangesByUser.Select((user, i) => (user, i)))
                     {
                         _dataGridView.Rows.Add(index+1, topUser.Username, topUser.ExchangeCount, topUser.Percentage);
