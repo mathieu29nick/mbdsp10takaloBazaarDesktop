@@ -49,7 +49,7 @@ namespace WinFormsApp.UI
                 Dock = DockStyle.Top, 
                 ColumnCount = 2,
                 RowCount = 1,
-                Padding = new Padding(30),
+                Padding = new Padding(0,30,30,30),
                 BackColor = Color.White,
                 AutoSize = true
             };
@@ -76,7 +76,7 @@ namespace WinFormsApp.UI
                 FlowDirection = FlowDirection.LeftToRight,
                 Width = 700,
                 AutoSize = true,
-                Padding = new Padding(10),
+                Padding = new Padding(0,0,10,10),
                 WrapContents = true
             };
 
@@ -370,6 +370,10 @@ namespace WinFormsApp.UI
                     columnChart.ChartAreas.Clear();
 
                     ChartArea chartArea1 = new ChartArea("MainArea");
+                    chartArea1.AxisX.Title = "Période des Échanges"; 
+                    chartArea1.AxisX.TitleFont = new Font("Arial", 12, FontStyle.Bold); 
+                    chartArea1.AxisY.Title = "Nombre d'Échanges"; 
+                    chartArea1.AxisY.TitleFont = new Font("Arial", 12, FontStyle.Bold); 
                     columnChart.ChartAreas.Add(chartArea1);
 
                     Series series1 = new Series("dahsboard")
