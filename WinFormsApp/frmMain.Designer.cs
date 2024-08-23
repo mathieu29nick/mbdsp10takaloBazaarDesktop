@@ -27,17 +27,10 @@ namespace WinFormsApp
             pnlLeft = new Panel();
             btnTypeReport = new Button();
             btnCategories = new Button();
-            btnSettings = new Button();
-            btn5 = new Button();
             btnDashboard = new Button();
-            btn3 = new Button();
-            btn2 = new Button();
-            btn1 = new Button();
             btnExchange = new Button();
             pnlExchange =new Panel();
             btnObject = new Button();
-            btnHome = new Button();
-            pnlSearch = new Panel();
             pnlObjects = new Panel();
             pnlTypeReport = new Panel();
             pnlDashboard = new Panel();
@@ -51,7 +44,6 @@ namespace WinFormsApp
             statusStrip1 = new StatusStrip();
             toolStripStatusLabel1 = new ToolStripStatusLabel();
             pnlLeft.SuspendLayout();
-            pnlSearch.SuspendLayout();
             panel3.SuspendLayout();
             panel2.SuspendLayout();
             statusStrip1.SuspendLayout();
@@ -67,14 +59,7 @@ namespace WinFormsApp
             pnlLeft.Controls.Add(btnUsers);
             pnlLeft.Controls.Add(btnObject);
             pnlLeft.Controls.Add(btnExchange);
-            pnlLeft.Controls.Add(btnSettings);
-            pnlLeft.Controls.Add(btn5);
             pnlLeft.Controls.Add(btnDashboard);
-            pnlLeft.Controls.Add(btn3);
-            pnlLeft.Controls.Add(btn2);
-            pnlLeft.Controls.Add(btn1);
-            pnlLeft.Controls.Add(btnHome);
-            pnlLeft.Controls.Add(pnlSearch);
             pnlLeft.Controls.Add(panel3);
             pnlLeft.Dock = DockStyle.Left;
             pnlLeft.Location = new Point(0, 0);
@@ -246,45 +231,6 @@ namespace WinFormsApp
             _exchangeListManager = new WinFormsApp.UI.ExchangeListScreen(pnlExchange);
             _dashboardControl = new DashboardScreen(pnlDashboard);
 
-
-            // 
-            // btnSettings
-            // 
-            btnSettings.Dock = DockStyle.Top;
-            btnSettings.FlatAppearance.BorderSize = 0;
-            btnSettings.FlatStyle = FlatStyle.Flat;
-            btnSettings.ForeColor = Color.White;
-            btnSettings.Image = (Image)resources.GetObject("btnSettings.Image");
-            btnSettings.ImageAlign = ContentAlignment.MiddleLeft;
-            btnSettings.Location = new Point(0, 479);
-            btnSettings.Name = "btnSettings";
-            btnSettings.Padding = new Padding(20, 0, 0, 0);
-            btnSettings.Size = new Size(310, 70);
-            btnSettings.TabIndex = 1;
-            btnSettings.Tag = "          Settings";
-            btnSettings.Text = "          Settings";
-            btnSettings.TextAlign = ContentAlignment.MiddleLeft;
-            btnSettings.UseVisualStyleBackColor = true;
-
-            // 
-            // btn5
-            // 
-            btn5.Dock = DockStyle.Top;
-            btn5.FlatAppearance.BorderSize = 0;
-            btn5.FlatStyle = FlatStyle.Flat;
-            btn5.ForeColor = Color.White;
-            btn5.Image = (Image)resources.GetObject("btn5.Image");
-            btn5.ImageAlign = ContentAlignment.MiddleLeft;
-            btn5.Location = new Point(0, 409);
-            btn5.Name = "btn5";
-            btn5.Padding = new Padding(20, 0, 0, 0);
-            btn5.Size = new Size(310, 70);
-            btn5.TabIndex = 1;
-            btn5.Tag = "          Button 5";
-            btn5.Text = "          Button 5";
-            btn5.TextAlign = ContentAlignment.MiddleLeft;
-            btn5.UseVisualStyleBackColor = true;
-
             // 
             // btnDashboard
             // 
@@ -316,95 +262,6 @@ namespace WinFormsApp
             pnlDashboard.Size = new Size(1624, 1073);
             pnlDashboard.TabIndex = 2;
             pnlDashboard.Visible = true;
-
-            // 
-            // btn3
-            // 
-            btn3.Dock = DockStyle.Top;
-            btn3.FlatAppearance.BorderSize = 0;
-            btn3.FlatStyle = FlatStyle.Flat;
-            btn3.ForeColor = Color.White;
-            btn3.Image = (Image)resources.GetObject("btn3.Image");
-            btn3.ImageAlign = ContentAlignment.MiddleLeft;
-            btn3.Location = new Point(0, 269);
-            btn3.Name = "btn3";
-            btn3.Padding = new Padding(20, 0, 0, 0);
-            btn3.Size = new Size(310, 70);
-            btn3.TabIndex = 1;
-            btn3.Tag = "          Button 3";
-            btn3.Text = "          Button 3";
-            btn3.TextAlign = ContentAlignment.MiddleLeft;
-            btn3.UseVisualStyleBackColor = true;
-
-            // 
-            // btn2
-            // 
-            btn2.Dock = DockStyle.Top;
-            btn2.FlatAppearance.BorderSize = 0;
-            btn2.FlatStyle = FlatStyle.Flat;
-            btn2.ForeColor = Color.White;
-            btn2.Image = (Image)resources.GetObject("btn2.Image");
-            btn2.ImageAlign = ContentAlignment.MiddleLeft;
-            btn2.Location = new Point(0, 199);
-            btn2.Name = "btn2";
-            btn2.Padding = new Padding(20, 0, 0, 0);
-            btn2.Size = new Size(310, 70);
-            btn2.TabIndex = 1;
-            btn2.Tag = "          Button 2";
-            btn2.Text = "          Button 2";
-            btn2.TextAlign = ContentAlignment.MiddleLeft;
-            btn2.UseVisualStyleBackColor = true;
-
-            // 
-            // btn1
-            // 
-            btn1.Dock = DockStyle.Top;
-            btn1.FlatAppearance.BorderSize = 0;
-            btn1.FlatStyle = FlatStyle.Flat;
-            btn1.ForeColor = Color.White;
-            btn1.Image = (Image)resources.GetObject("btn1.Image");
-            btn1.ImageAlign = ContentAlignment.MiddleLeft;
-            btn1.Location = new Point(0, 129);
-            btn1.Name = "btn1";
-            btn1.Padding = new Padding(20, 0, 0, 0);
-            btn1.Size = new Size(310, 70);
-            btn1.TabIndex = 1;
-            btn1.Tag = "          Button 1";
-            btn1.Text = "          Button 1";
-            btn1.TextAlign = ContentAlignment.MiddleLeft;
-            btn1.UseVisualStyleBackColor = true;
-
-            // 
-            // btnHome
-            // 
-            btnHome.Dock = DockStyle.Top;
-            btnHome.FlatAppearance.BorderSize = 0;
-            btnHome.FlatStyle = FlatStyle.Flat;
-            btnHome.ForeColor = Color.White;
-            btnHome.Image = (Image)resources.GetObject("btnHome.Image");
-            btnHome.ImageAlign = ContentAlignment.MiddleLeft;
-            btnHome.Location = new Point(0, 59);
-            btnHome.Name = "btnHome";
-            btnHome.Padding = new Padding(20, 0, 0, 0);
-            btnHome.Size = new Size(310, 70);
-            btnHome.TabIndex = 1;
-            btnHome.Tag = "          Home";
-            btnHome.Text = "          Home";
-            btnHome.TextAlign = ContentAlignment.MiddleLeft;
-            btnHome.UseVisualStyleBackColor = true;
-
-            // 
-            // pnlSearch
-            // 
-            pnlSearch.AutoSize = true;
-            pnlSearch.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            pnlSearch.Controls.Add(tbSearch);
-            pnlSearch.Dock = DockStyle.Top;
-            pnlSearch.Location = new Point(0, 70);
-            pnlSearch.Name = "pnlSearch";
-            pnlSearch.Padding = new Padding(10);
-            pnlSearch.Size = new Size(310, 59);
-            pnlSearch.TabIndex = 3;
 
             // 
             // tbSearch
@@ -441,7 +298,7 @@ namespace WinFormsApp
             btnLogoSmall.Size = new Size(310, 70);
             btnLogoSmall.TabIndex = 1;
             btnLogoSmall.Tag = "ADMIN";
-            btnLogoSmall.Text = "ADMIN";
+            btnLogoSmall.Text = "TAKALOBAZAAR'Ô";
             btnLogoSmall.UseVisualStyleBackColor = true;
 
             // 
@@ -505,12 +362,10 @@ namespace WinFormsApp
             DoubleBuffered = true;
             Name = "frmMain";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Form1";
+            Text = "TakaloBazaar'ô";
             Load += frmMain_Load;
             pnlLeft.ResumeLayout(false);
             pnlLeft.PerformLayout();
-            pnlSearch.ResumeLayout(false);
-            pnlSearch.PerformLayout();
             panel3.ResumeLayout(false);
             panel2.ResumeLayout(false);
             statusStrip1.ResumeLayout(false);
@@ -528,16 +383,9 @@ namespace WinFormsApp
         private Panel panel3;
         private Button btnMenuBar;
         private Button btnLogoSmall;
-        private Button btnHome;
         private Button btnTypeReport;
-        private Button btnSettings;
-        private Button btn5;
         private Button btnDashboard;
-        private Button btn3;
-        private Button btn2;
-        private Button btn1;
         private Custom_Controls.RoundTB tbSearch;
-        private Panel pnlSearch;
         private Button btnCategories;
         private Panel pnlCategories;
         private Button btnUsers;
@@ -556,7 +404,6 @@ namespace WinFormsApp
             pnlUsers.Visible = false;
             pnlExchange.Visible = false;
             pnlTypeReport.Visible = false;
-            pnlSearch.Visible = false;
             pnlDashboard.Visible = false;
         }
 

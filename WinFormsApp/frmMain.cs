@@ -33,7 +33,6 @@ namespace WinFormsApp
                 }
             }
 
-            pnlSearch.Visible = !shrink;
             btnLogoSmall.ImageAlign = shrink ? ContentAlignment.MiddleCenter : ContentAlignment.MiddleLeft;
             btnLogoSmall.Text = shrink ? string.Empty : btnLogoSmall.Tag!.ToString();
             btnLogoSmall.Padding = shrink ? new Padding(0) : new Padding(20, 0, 0, 0);
