@@ -53,7 +53,7 @@ namespace WinFormsApp
             // pnlLeft
             // 
             pnlLeft.AutoScroll = true;
-            pnlLeft.BackColor = Color.FromArgb(73, 78, 83);
+            pnlLeft.BackColor = ColorTranslator.FromHtml("#8a8f6a");
             pnlLeft.Controls.Add(btnTypeReport);
             pnlLeft.Controls.Add(btnCategories);
             pnlLeft.Controls.Add(btnUsers);
@@ -64,7 +64,7 @@ namespace WinFormsApp
             pnlLeft.Dock = DockStyle.Left;
             pnlLeft.Location = new Point(0, 0);
             pnlLeft.Name = "pnlLeft";
-            pnlLeft.Size = new Size(310, 1143);
+            pnlLeft.Size = new Size(350, 1143);
             pnlLeft.TabIndex = 0;
 
             // User button
@@ -77,7 +77,7 @@ namespace WinFormsApp
             btnUsers.Location = new Point(0, 759); // Adjust the location as needed.
             btnUsers.Name = "btnUsers";
             btnUsers.Padding = new Padding(20, 0, 0, 0);
-            btnUsers.Size = new Size(310, 70);
+            btnUsers.Size = new Size(350, 70);
             btnUsers.TabIndex = 2;
             btnUsers.Tag = "          Utilisateurs";
             btnUsers.Text = "          Utilisateurs";
@@ -95,8 +95,8 @@ namespace WinFormsApp
             btnTypeReport.Location = new Point(0, 567);
             btnTypeReport.Margin = new Padding(2, 2, 2, 2);
             btnTypeReport.Name = "btnTypeReport";
-            btnTypeReport.Padding = new Padding(15, 0, 0, 0);
-            btnTypeReport.Size = new Size(232, 52);
+            btnTypeReport.Padding = new Padding(20, 0, 0, 0);
+            btnTypeReport.Size = new Size(350, 52);
             btnTypeReport.TabIndex = 1;
             btnTypeReport.Tag = "          Type de signalements";
             btnTypeReport.Text = "          Type de signalements";
@@ -110,7 +110,7 @@ namespace WinFormsApp
             // 
             pnlTypeReport.Dock = DockStyle.Fill;
             pnlTypeReport.BackColor = Color.FromArgb(244, 246, 249);
-            pnlTypeReport.Location = new Point(310, 70);
+            pnlTypeReport.Location = new Point(350, 70);
             pnlTypeReport.Name = "pnlTypeReport";
             pnlTypeReport.Size = new Size(1624, 1073);
             pnlTypeReport.TabIndex = 2;
@@ -128,7 +128,7 @@ namespace WinFormsApp
             btnCategories.Location = new Point(0, 619);
             btnCategories.Name = "btnCategories";
             btnCategories.Padding = new Padding(20, 0, 0, 0);
-            btnCategories.Size = new Size(310, 70);
+            btnCategories.Size = new Size(350, 70);
             btnCategories.TabIndex = 2;
             btnCategories.Tag = "          Catégories";
             btnCategories.Text = "          Catégories";
@@ -141,7 +141,7 @@ namespace WinFormsApp
             // 
             pnlCategories.Dock = DockStyle.Fill;
             pnlCategories.BackColor = Color.FromArgb(244, 246, 249);
-            pnlCategories.Location = new Point(310, 70);
+            pnlCategories.Location = new Point(350, 70);
             pnlCategories.Name = "pnlCategories";
             pnlCategories.Size = new Size(1624, 1073);
             pnlCategories.TabIndex = 2;
@@ -159,7 +159,7 @@ namespace WinFormsApp
             btnExchange.Location = new Point(0, 700);
             btnExchange.Name = "btnCategories";
             btnExchange.Padding = new Padding(20, 0, 0, 0);
-            btnExchange.Size = new Size(310, 70);
+            btnExchange.Size = new Size(350, 70);
             btnExchange.TabIndex = 2;
             btnExchange.Tag = "          Liste Exchanges";
             btnExchange.Text = "          Liste Echanges";
@@ -172,7 +172,7 @@ namespace WinFormsApp
             // 
             pnlExchange.Dock = DockStyle.Fill;
             pnlExchange.BackColor = Color.FromArgb(244, 246, 249);
-            pnlExchange.Location = new Point(310, 70);
+            pnlExchange.Location = new Point(350, 70);
             pnlExchange.Name = "pnlExchange";
             pnlExchange.Size = new Size(1624, 1073);
             pnlExchange.TabIndex = 2;
@@ -187,7 +187,7 @@ namespace WinFormsApp
             pnlUsers = new Panel();
             pnlUsers.Dock = DockStyle.Fill;
             pnlUsers.BackColor = Color.FromArgb(244, 246, 249);
-            pnlUsers.Location = new Point(310, 70);
+            pnlUsers.Location = new Point(350, 70);
             pnlUsers.Name = "pnlUsers";
             pnlUsers.Size = new Size(1624, 1073);
             pnlUsers.TabIndex = 4;
@@ -207,7 +207,7 @@ namespace WinFormsApp
             btnObject.Location = new Point(0, 689);
             btnObject.Name = "btnObject";
             btnObject.Padding = new Padding(20, 0, 0, 0);
-            btnObject.Size = new Size(310, 70);
+            btnObject.Size = new Size(350, 70);
             btnObject.TabIndex = 2;
             btnObject.Tag = "          Liste Objet";
             btnObject.Text = "          Liste Objet";
@@ -243,7 +243,7 @@ namespace WinFormsApp
             btnDashboard.Location = new Point(250, 339);
             btnDashboard.Name = "Dashboard";
             btnDashboard.Padding = new Padding(20, 0, 0, 0);
-            btnDashboard.Size = new Size(310, 70);
+            btnDashboard.Size = new Size(350, 70);
             btnDashboard.TabIndex = 1;
             btnDashboard.Tag = "         Dashboard";
             btnDashboard.Text = "          Dashboard";
@@ -257,7 +257,7 @@ namespace WinFormsApp
             // 
             pnlDashboard.Dock = DockStyle.Fill;
             pnlDashboard.BackColor = Color.FromArgb(244, 246, 249);
-            pnlDashboard.Location = new Point(310, 70);
+            pnlDashboard.Location = new Point(350, 70);
             pnlDashboard.Name = "pnlDashboard";
             pnlDashboard.Size = new Size(1624, 1073);
             pnlDashboard.TabIndex = 2;
@@ -281,7 +281,7 @@ namespace WinFormsApp
             panel3.Dock = DockStyle.Top;
             panel3.Location = new Point(0, 0);
             panel3.Name = "panel3";
-            panel3.Size = new Size(310, 70);
+            panel3.Size = new Size(350, 70);
             panel3.TabIndex = 0;
 
             // 
@@ -290,14 +290,16 @@ namespace WinFormsApp
             btnLogoSmall.Dock = DockStyle.Top;
             btnLogoSmall.FlatAppearance.BorderSize = 0;
             btnLogoSmall.FlatStyle = FlatStyle.Flat;
-            btnLogoSmall.Image = (Image)resources.GetObject("btnLogoSmall.Image");
+            string projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string imagePath = Path.Combine(projectDirectory, "..\\..\\..\\Icons", "icons8-ai-50.png");
+            btnLogoSmall.Image = Image.FromFile(imagePath);
             btnLogoSmall.ImageAlign = ContentAlignment.MiddleLeft;
             btnLogoSmall.Location = new Point(0, 0);
-            btnLogoSmall.Name = "btnLogoSmall";
             btnLogoSmall.Padding = new Padding(20, 0, 0, 0);
-            btnLogoSmall.Size = new Size(310, 70);
+            btnLogoSmall.Name = "btnLogoSmall";
+            btnLogoSmall.Size = new Size(350, 70);
             btnLogoSmall.TabIndex = 1;
-            btnLogoSmall.Tag = "ADMIN";
+            btnLogoSmall.Tag = "TAKALOBAZAAR'Ô";
             btnLogoSmall.Text = "TAKALOBAZAAR'Ô";
             btnLogoSmall.UseVisualStyleBackColor = true;
 
@@ -307,7 +309,7 @@ namespace WinFormsApp
             panel2.BackColor = Color.White;
             panel2.Controls.Add(btnMenuBar);
             panel2.Dock = DockStyle.Top;
-            panel2.Location = new Point(310, 0);
+            panel2.Location = new Point(350, 0);
             panel2.Name = "panel2";
             panel2.Size = new Size(1624, 70);
             panel2.TabIndex = 1;
