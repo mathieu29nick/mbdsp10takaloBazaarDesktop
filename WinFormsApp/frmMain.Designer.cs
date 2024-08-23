@@ -41,6 +41,8 @@ namespace WinFormsApp
             btnMenuBar = new Button();
             pnlCategories = new Panel();
             btnUsers = new Button();
+            btnReports = new Button();
+            pnlReports = new Panel();
             statusStrip1 = new StatusStrip();
             toolStripStatusLabel1 = new ToolStripStatusLabel();
             pnlLeft.SuspendLayout();
@@ -59,6 +61,7 @@ namespace WinFormsApp
             pnlLeft.Controls.Add(btnUsers);
             pnlLeft.Controls.Add(btnObject);
             pnlLeft.Controls.Add(btnExchange);
+            pnlLeft.Controls.Add(btnReports);
             pnlLeft.Controls.Add(btnDashboard);
             pnlLeft.Controls.Add(panel3);
             pnlLeft.Dock = DockStyle.Left;
@@ -263,6 +266,36 @@ namespace WinFormsApp
             pnlDashboard.TabIndex = 2;
             pnlDashboard.Visible = true;
 
+            // btnReports
+            btnReports.Dock = DockStyle.Top;
+            btnReports.FlatAppearance.BorderSize = 0;
+            btnReports.FlatStyle = FlatStyle.Flat;
+            btnReports.ForeColor = Color.White;
+            btnReports.Image = (Image)resources.GetObject("btnHelp.Image");
+            btnReports.ImageAlign = ContentAlignment.MiddleLeft;
+            btnReports.Location = new Point(0, 889);
+            btnReports.Name = "btnReports";
+            btnReports.Padding = new Padding(20, 0, 0, 0);
+            btnReports.Size = new Size(350, 70);
+            btnReports.TabIndex = 2;
+            btnReports.Tag = "          Objets signalés";
+            btnReports.Text = "          Objets signalés";
+            btnReports.TextAlign = ContentAlignment.MiddleLeft;
+            btnReports.UseVisualStyleBackColor = true;
+            btnReports.Click += new EventHandler(this.btnReports_Click);
+
+
+            // pnlReports
+            pnlReports = new Panel();
+            pnlReports.Dock = DockStyle.Fill;
+            pnlReports.BackColor = Color.FromArgb(244, 246, 249);
+            pnlReports.Location = new Point(350, 70);
+            pnlReports.Name = "pnlReports";
+            pnlReports.Size = new Size(1624, 1073);
+            pnlReports.TabIndex = 4;
+            pnlReports.Visible = false;
+            Controls.Add(pnlReports);
+
             // 
             // tbSearch
             // 
@@ -397,6 +430,8 @@ namespace WinFormsApp
         private Panel pnlTypeReport;
         private Button btnExchange;
         private Panel pnlExchange;
+        private Button btnReports;
+        private Panel pnlReports;
         private Panel pnlDashboard;
 
         private void HideAllPanels()
@@ -407,6 +442,7 @@ namespace WinFormsApp
             pnlExchange.Visible = false;
             pnlTypeReport.Visible = false;
             pnlDashboard.Visible = false;
+            pnlReports.Visible = false;
         }
 
         private void btnCategories_Click(object sender, EventArgs e)
@@ -444,6 +480,18 @@ namespace WinFormsApp
             pnlTypeReport.Visible = true;
             await _typeReportListManager.LoadTypeReportsAsync();
         }
+
+        private async void btnReports_Click(object sender, EventArgs e)
+        {
+            HideAllPanels();
+            pnlReports.Visible = true;
+
+            pnlReports.Controls.Clear();
+            var reportListScreen = new WinFormsApp.UI.ReportListScreen();
+            reportListScreen.Dock = DockStyle.Fill;
+            pnlReports.Controls.Add(reportListScreen);
+        }
+
 
         private async void btnExchange_Click(object sender, EventArgs e)
         {
