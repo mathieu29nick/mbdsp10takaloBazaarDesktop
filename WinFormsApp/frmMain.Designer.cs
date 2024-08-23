@@ -102,7 +102,7 @@ namespace WinFormsApp
             btnTypeReport.Text = "          Type de signalements";
             btnTypeReport.TextAlign = ContentAlignment.MiddleLeft;
             btnTypeReport.UseVisualStyleBackColor = true;
-            btnTypeReport.Click += btnExchange_Click;
+            btnTypeReport.Click += btnTypeReport_Click;
 
 
             // 
@@ -161,8 +161,8 @@ namespace WinFormsApp
             btnExchange.Padding = new Padding(20, 0, 0, 0);
             btnExchange.Size = new Size(350, 70);
             btnExchange.TabIndex = 2;
-            btnExchange.Tag = "          Liste Exchanges";
-            btnExchange.Text = "          Liste Echanges";
+            btnExchange.Tag = "          Echanges";
+            btnExchange.Text = "          Echanges";
             btnExchange.TextAlign = ContentAlignment.MiddleLeft;
             btnExchange.UseVisualStyleBackColor = true;
             btnExchange.Click += new EventHandler(this.btnExchange_Click);
@@ -209,8 +209,8 @@ namespace WinFormsApp
             btnObject.Padding = new Padding(20, 0, 0, 0);
             btnObject.Size = new Size(350, 70);
             btnObject.TabIndex = 2;
-            btnObject.Tag = "          Liste Objet";
-            btnObject.Text = "          Liste Objet";
+            btnObject.Tag = "          Objets";
+            btnObject.Text = "          Objets";
             btnObject.TextAlign = ContentAlignment.MiddleLeft;
             btnObject.UseVisualStyleBackColor = true;
             btnObject.Click += new EventHandler(this.btnObject_Click);
@@ -442,7 +442,6 @@ namespace WinFormsApp
         {
             HideAllPanels();
             pnlTypeReport.Visible = true;
-            pnlDashboard.Visible = false;
             await _typeReportListManager.LoadTypeReportsAsync();
         }
 
