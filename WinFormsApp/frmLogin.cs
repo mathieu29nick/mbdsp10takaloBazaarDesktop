@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
 using WinFormsApp.Services;
 
@@ -19,13 +18,20 @@ namespace WinFormsApp
             // Charger l'image de fond à partir des ressources intégrées
             try
             {
-                pictureBox1.BackgroundImage = WinFormsApp.Properties.Resources.takalo; 
-                pictureBox1.BackgroundImageLayout = ImageLayout.Stretch; 
+                pictureBox1.BackgroundImage = WinFormsApp.Properties.Resources.takalo;
+                pictureBox1.BackgroundImageLayout = ImageLayout.Stretch;
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Erreur lors du chargement de l'image: {ex.Message}");
             }
+
+            // Configure form for minimize, maximize, and close buttons
+            this.FormBorderStyle = FormBorderStyle.Sizable; // Allows resizing
+            this.ControlBox = true;                         // Ensures the control box is visible
+            this.MinimizeBox = true;                        // Enables the minimize button
+            this.MaximizeBox = true;                        // Enables the maximize button
+            this.StartPosition = FormStartPosition.CenterScreen; // Centers the form on screen
         }
 
         private async void btnLogin_Click(object sender, EventArgs e)

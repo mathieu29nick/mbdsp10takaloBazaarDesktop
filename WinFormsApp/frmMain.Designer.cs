@@ -31,7 +31,8 @@ namespace WinFormsApp
             btnExchange = new Button();
             pnlExchange =new Panel();
             btnObject = new Button();
-          
+            btnLogout = new Button();
+
             pnlObjects = new Panel();
             pnlTypeReport = new Panel();
             pnlDashboard = new Panel();
@@ -57,6 +58,7 @@ namespace WinFormsApp
             // 
             pnlLeft.AutoScroll = true;
             pnlLeft.BackColor = ColorTranslator.FromHtml("#8a8f6a");
+            pnlLeft.Controls.Add(btnLogout);
             pnlLeft.Controls.Add(btnTypeReport);
             pnlLeft.Controls.Add(btnCategories);
             pnlLeft.Controls.Add(btnUsers);
@@ -112,10 +114,11 @@ namespace WinFormsApp
             // 
             // btnLogout
             // 
-            btnLogout.Dock = DockStyle.Top;
+            btnLogout.Dock = DockStyle.Bottom;
             btnLogout.FlatAppearance.BorderSize = 0;
             btnLogout.FlatStyle = FlatStyle.Flat;
-            btnLogout.ForeColor = ColorTranslator.FromHtml("#bc8246");
+            btnLogout.BackColor = ColorTranslator.FromHtml("#bc8246");
+            btnLogout.ForeColor = Color.White;
             btnLogout.Location = new Point(0, 759);
             btnLogout.Name = "btnLogout";
             btnLogout.Padding = new Padding(0); 
