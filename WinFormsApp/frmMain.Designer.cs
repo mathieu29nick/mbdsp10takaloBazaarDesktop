@@ -31,6 +31,7 @@ namespace WinFormsApp
             btnExchange = new Button();
             pnlExchange =new Panel();
             btnObject = new Button();
+          
             pnlObjects = new Panel();
             pnlTypeReport = new Panel();
             pnlDashboard = new Panel();
@@ -109,6 +110,28 @@ namespace WinFormsApp
 
 
             // 
+            // btnLogout
+            // 
+            btnLogout.Dock = DockStyle.Top;
+            btnLogout.FlatAppearance.BorderSize = 0;
+            btnLogout.FlatStyle = FlatStyle.Flat;
+            btnLogout.ForeColor = ColorTranslator.FromHtml("#bc8246");
+            btnLogout.Location = new Point(0, 759);
+            btnLogout.Name = "btnLogout";
+            btnLogout.Padding = new Padding(0); 
+            btnLogout.Size = new Size(310, 70);
+            btnLogout.TabIndex = 3;
+            btnLogout.Tag = "          Logout";
+            btnLogout.Text = "Déconnexion";
+            btnLogout.TextAlign = ContentAlignment.MiddleCenter;
+            btnLogout.Font = new Font(btnLogout.Font.FontFamily, 11, FontStyle.Bold);
+            btnLogout.UseVisualStyleBackColor = true;
+            btnLogout.Click += new EventHandler(this.btnLogout_Click); 
+
+
+
+            // 
+            // btnHelp
             // pnlTypeReport
             // 
             pnlTypeReport.Dock = DockStyle.Fill;
@@ -427,6 +450,7 @@ namespace WinFormsApp
         private Panel pnlUsers;
         private Button btnObject;
         private Panel pnlObjects;
+        private Button btnLogout;
         private Panel pnlTypeReport;
         private Button btnExchange;
         private Panel pnlExchange;
@@ -462,6 +486,7 @@ namespace WinFormsApp
             pnlObjects.Visible = true;
             await _objectListManager.LoadObjectsAsync();
         }
+      
 
       private void btnUsers_Click(object sender, EventArgs e)
         {

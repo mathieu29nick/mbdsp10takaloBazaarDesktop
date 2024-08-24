@@ -5,11 +5,12 @@ namespace WinFormsApp.Services
     public static class HttpClientFactory
     {
         private static readonly HttpClient _httpClient;
+        private static readonly Interceptor interceptor;
 
         static HttpClientFactory()
         {
             var primaryHandler = new HttpClientHandler();
-            var interceptor = new Interceptor(primaryHandler);
+            interceptor = new Interceptor(primaryHandler);
             _httpClient = new HttpClient(interceptor);
         }
 
