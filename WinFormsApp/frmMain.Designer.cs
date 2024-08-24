@@ -1,4 +1,6 @@
-﻿namespace WinFormsApp
+﻿using WinFormsApp.UI;
+
+namespace WinFormsApp
 {
     partial class frmMain
     {
@@ -6,6 +8,7 @@
         private WinFormsApp.UI.ObjectListManager _objectListManager;
         private WinFormsApp.UI.TypeReportListScreen _typeReportListManager;
         private WinFormsApp.UI.ExchangeListScreen _exchangeListManager;
+        private DashboardScreen _dashboardControl;
 
         protected override void Dispose(bool disposing)
         {
@@ -24,20 +27,14 @@
             pnlLeft = new Panel();
             btnTypeReport = new Button();
             btnCategories = new Button();
-            btnSettings = new Button();
-            btn5 = new Button();
-            btn4 = new Button();
-            btn3 = new Button();
-            btn2 = new Button();
-            btn1 = new Button();
+            btnDashboard = new Button();
             btnExchange = new Button();
             pnlExchange =new Panel();
             btnObject = new Button();
-            btnHome = new Button();
-            btnLogout = new Button();
-            pnlSearch = new Panel();
+          
             pnlObjects = new Panel();
             pnlTypeReport = new Panel();
+            pnlDashboard = new Panel();
             tbSearch = new Custom_Controls.RoundTB();
             panel3 = new Panel();
             btnLogoSmall = new Button();
@@ -45,10 +42,11 @@
             btnMenuBar = new Button();
             pnlCategories = new Panel();
             btnUsers = new Button();
+            btnReports = new Button();
+            pnlReports = new Panel();
             statusStrip1 = new StatusStrip();
             toolStripStatusLabel1 = new ToolStripStatusLabel();
             pnlLeft.SuspendLayout();
-            pnlSearch.SuspendLayout();
             panel3.SuspendLayout();
             panel2.SuspendLayout();
             statusStrip1.SuspendLayout();
@@ -58,27 +56,19 @@
             // pnlLeft
             // 
             pnlLeft.AutoScroll = true;
-            pnlLeft.BackColor = Color.FromArgb(73, 78, 83);
-             pnlLeft.Controls.Add(btnLogout);
-/*            pnlLeft.Controls.Add(btnHelp);
-*/            pnlLeft.Controls.Add(btnTypeReport);
+            pnlLeft.BackColor = ColorTranslator.FromHtml("#8a8f6a");
+            pnlLeft.Controls.Add(btnTypeReport);
             pnlLeft.Controls.Add(btnCategories);
             pnlLeft.Controls.Add(btnUsers);
             pnlLeft.Controls.Add(btnObject);
             pnlLeft.Controls.Add(btnExchange);
-            pnlLeft.Controls.Add(btnSettings);
-            pnlLeft.Controls.Add(btn5);
-            pnlLeft.Controls.Add(btn4);
-            pnlLeft.Controls.Add(btn3);
-            pnlLeft.Controls.Add(btn2);
-            pnlLeft.Controls.Add(btn1);
-            pnlLeft.Controls.Add(btnHome);
-            pnlLeft.Controls.Add(pnlSearch);
+            pnlLeft.Controls.Add(btnReports);
+            pnlLeft.Controls.Add(btnDashboard);
             pnlLeft.Controls.Add(panel3);
             pnlLeft.Dock = DockStyle.Left;
             pnlLeft.Location = new Point(0, 0);
             pnlLeft.Name = "pnlLeft";
-            pnlLeft.Size = new Size(310, 1143);
+            pnlLeft.Size = new Size(350, 1143);
             pnlLeft.TabIndex = 0;
 
             // User button
@@ -91,7 +81,7 @@
             btnUsers.Location = new Point(0, 759); // Adjust the location as needed.
             btnUsers.Name = "btnUsers";
             btnUsers.Padding = new Padding(20, 0, 0, 0);
-            btnUsers.Size = new Size(310, 70);
+            btnUsers.Size = new Size(350, 70);
             btnUsers.TabIndex = 2;
             btnUsers.Tag = "          Utilisateurs";
             btnUsers.Text = "          Utilisateurs";
@@ -109,14 +99,14 @@
             btnTypeReport.Location = new Point(0, 567);
             btnTypeReport.Margin = new Padding(2, 2, 2, 2);
             btnTypeReport.Name = "btnTypeReport";
-            btnTypeReport.Padding = new Padding(15, 0, 0, 0);
-            btnTypeReport.Size = new Size(232, 52);
+            btnTypeReport.Padding = new Padding(20, 0, 0, 0);
+            btnTypeReport.Size = new Size(350, 52);
             btnTypeReport.TabIndex = 1;
             btnTypeReport.Tag = "          Type de signalements";
             btnTypeReport.Text = "          Type de signalements";
             btnTypeReport.TextAlign = ContentAlignment.MiddleLeft;
             btnTypeReport.UseVisualStyleBackColor = true;
-            btnTypeReport.Click += btnExchange_Click;
+            btnTypeReport.Click += btnTypeReport_Click;
 
 
             // 
@@ -146,7 +136,7 @@
             // 
             pnlTypeReport.Dock = DockStyle.Fill;
             pnlTypeReport.BackColor = Color.FromArgb(244, 246, 249);
-            pnlTypeReport.Location = new Point(310, 70);
+            pnlTypeReport.Location = new Point(350, 70);
             pnlTypeReport.Name = "pnlTypeReport";
             pnlTypeReport.Size = new Size(1624, 1073);
             pnlTypeReport.TabIndex = 2;
@@ -164,7 +154,7 @@
             btnCategories.Location = new Point(0, 619);
             btnCategories.Name = "btnCategories";
             btnCategories.Padding = new Padding(20, 0, 0, 0);
-            btnCategories.Size = new Size(310, 70);
+            btnCategories.Size = new Size(350, 70);
             btnCategories.TabIndex = 2;
             btnCategories.Tag = "          Catégories";
             btnCategories.Text = "          Catégories";
@@ -177,7 +167,7 @@
             // 
             pnlCategories.Dock = DockStyle.Fill;
             pnlCategories.BackColor = Color.FromArgb(244, 246, 249);
-            pnlCategories.Location = new Point(310, 70);
+            pnlCategories.Location = new Point(350, 70);
             pnlCategories.Name = "pnlCategories";
             pnlCategories.Size = new Size(1624, 1073);
             pnlCategories.TabIndex = 2;
@@ -195,10 +185,10 @@
             btnExchange.Location = new Point(0, 700);
             btnExchange.Name = "btnCategories";
             btnExchange.Padding = new Padding(20, 0, 0, 0);
-            btnExchange.Size = new Size(310, 70);
+            btnExchange.Size = new Size(350, 70);
             btnExchange.TabIndex = 2;
-            btnExchange.Tag = "          Liste Exchanges";
-            btnExchange.Text = "          Liste Echanges";
+            btnExchange.Tag = "          Echanges";
+            btnExchange.Text = "          Echanges";
             btnExchange.TextAlign = ContentAlignment.MiddleLeft;
             btnExchange.UseVisualStyleBackColor = true;
             btnExchange.Click += new EventHandler(this.btnExchange_Click);
@@ -208,7 +198,7 @@
             // 
             pnlExchange.Dock = DockStyle.Fill;
             pnlExchange.BackColor = Color.FromArgb(244, 246, 249);
-            pnlExchange.Location = new Point(310, 70);
+            pnlExchange.Location = new Point(350, 70);
             pnlExchange.Name = "pnlExchange";
             pnlExchange.Size = new Size(1624, 1073);
             pnlExchange.TabIndex = 2;
@@ -223,7 +213,7 @@
             pnlUsers = new Panel();
             pnlUsers.Dock = DockStyle.Fill;
             pnlUsers.BackColor = Color.FromArgb(244, 246, 249);
-            pnlUsers.Location = new Point(310, 70);
+            pnlUsers.Location = new Point(350, 70);
             pnlUsers.Name = "pnlUsers";
             pnlUsers.Size = new Size(1624, 1073);
             pnlUsers.TabIndex = 4;
@@ -243,10 +233,10 @@
             btnObject.Location = new Point(0, 689);
             btnObject.Name = "btnObject";
             btnObject.Padding = new Padding(20, 0, 0, 0);
-            btnObject.Size = new Size(310, 70);
+            btnObject.Size = new Size(350, 70);
             btnObject.TabIndex = 2;
-            btnObject.Tag = "          Liste Objet";
-            btnObject.Text = "          Liste Objet";
+            btnObject.Tag = "          Objets";
+            btnObject.Text = "          Objets";
             btnObject.TextAlign = ContentAlignment.MiddleLeft;
             btnObject.UseVisualStyleBackColor = true;
             btnObject.Click += new EventHandler(this.btnObject_Click);
@@ -265,153 +255,69 @@
             _objectListManager = new WinFormsApp.UI.ObjectListManager(pnlObjects);
             _typeReportListManager = new WinFormsApp.UI.TypeReportListScreen(pnlTypeReport);
             _exchangeListManager = new WinFormsApp.UI.ExchangeListScreen(pnlExchange);
+            _dashboardControl = new DashboardScreen(pnlDashboard);
+
+            // 
+            // btnDashboard
+            // 
+            btnDashboard.Dock = DockStyle.Top;
+            btnDashboard.FlatAppearance.BorderSize = 0;
+            btnDashboard.FlatStyle = FlatStyle.Flat;
+            btnDashboard.ForeColor = Color.White;
+            btnDashboard.Image = (Image)resources.GetObject("btn4.Image");
+            btnDashboard.ImageAlign = ContentAlignment.MiddleLeft;
+            btnDashboard.Location = new Point(250, 339);
+            btnDashboard.Name = "Dashboard";
+            btnDashboard.Padding = new Padding(20, 0, 0, 0);
+            btnDashboard.Size = new Size(350, 70);
+            btnDashboard.TabIndex = 1;
+            btnDashboard.Tag = "         Dashboard";
+            btnDashboard.Text = "          Dashboard";
+            btnDashboard.TextAlign = ContentAlignment.MiddleLeft;
+            btnDashboard.UseVisualStyleBackColor = true;
+            btnDashboard.Click += btnDashboard_Click;
 
 
             // 
-            // btnSettings
+            // pnlDashboard
             // 
-            btnSettings.Dock = DockStyle.Top;
-            btnSettings.FlatAppearance.BorderSize = 0;
-            btnSettings.FlatStyle = FlatStyle.Flat;
-            btnSettings.ForeColor = Color.White;
-            btnSettings.Image = (Image)resources.GetObject("btnSettings.Image");
-            btnSettings.ImageAlign = ContentAlignment.MiddleLeft;
-            btnSettings.Location = new Point(0, 479);
-            btnSettings.Name = "btnSettings";
-            btnSettings.Padding = new Padding(20, 0, 0, 0);
-            btnSettings.Size = new Size(310, 70);
-            btnSettings.TabIndex = 1;
-            btnSettings.Tag = "          Settings";
-            btnSettings.Text = "          Settings";
-            btnSettings.TextAlign = ContentAlignment.MiddleLeft;
-            btnSettings.UseVisualStyleBackColor = true;
+            pnlDashboard.Dock = DockStyle.Fill;
+            pnlDashboard.BackColor = Color.FromArgb(244, 246, 249);
+            pnlDashboard.Location = new Point(350, 70);
+            pnlDashboard.Name = "pnlDashboard";
+            pnlDashboard.Size = new Size(1624, 1073);
+            pnlDashboard.TabIndex = 2;
+            pnlDashboard.Visible = true;
 
-            // 
-            // btn5
-            // 
-            btn5.Dock = DockStyle.Top;
-            btn5.FlatAppearance.BorderSize = 0;
-            btn5.FlatStyle = FlatStyle.Flat;
-            btn5.ForeColor = Color.White;
-            btn5.Image = (Image)resources.GetObject("btn5.Image");
-            btn5.ImageAlign = ContentAlignment.MiddleLeft;
-            btn5.Location = new Point(0, 409);
-            btn5.Name = "btn5";
-            btn5.Padding = new Padding(20, 0, 0, 0);
-            btn5.Size = new Size(310, 70);
-            btn5.TabIndex = 1;
-            btn5.Tag = "          Button 5";
-            btn5.Text = "          Button 5";
-            btn5.TextAlign = ContentAlignment.MiddleLeft;
-            btn5.UseVisualStyleBackColor = true;
+            // btnReports
+            btnReports.Dock = DockStyle.Top;
+            btnReports.FlatAppearance.BorderSize = 0;
+            btnReports.FlatStyle = FlatStyle.Flat;
+            btnReports.ForeColor = Color.White;
+            btnReports.Image = (Image)resources.GetObject("btnHelp.Image");
+            btnReports.ImageAlign = ContentAlignment.MiddleLeft;
+            btnReports.Location = new Point(0, 889);
+            btnReports.Name = "btnReports";
+            btnReports.Padding = new Padding(20, 0, 0, 0);
+            btnReports.Size = new Size(350, 70);
+            btnReports.TabIndex = 2;
+            btnReports.Tag = "          Objets signalés";
+            btnReports.Text = "          Objets signalés";
+            btnReports.TextAlign = ContentAlignment.MiddleLeft;
+            btnReports.UseVisualStyleBackColor = true;
+            btnReports.Click += new EventHandler(this.btnReports_Click);
 
-            // 
-            // btn4
-            // 
-            btn4.Dock = DockStyle.Top;
-            btn4.FlatAppearance.BorderSize = 0;
-            btn4.FlatStyle = FlatStyle.Flat;
-            btn4.ForeColor = Color.White;
-            btn4.Image = (Image)resources.GetObject("btn4.Image");
-            btn4.ImageAlign = ContentAlignment.MiddleLeft;
-            btn4.Location = new Point(250, 339);
-            btn4.Name = "btn4";
-            btn4.Padding = new Padding(20, 0, 0, 0);
-            btn4.Size = new Size(310, 70);
-            btn4.TabIndex = 1;
-            btn4.Tag = "          Button 4";
-            btn4.Text = "          Button 4";
-            btn4.TextAlign = ContentAlignment.MiddleLeft;
-            btn4.UseVisualStyleBackColor = true;
 
-            // 
-            // btn3
-            // 
-            btn3.Dock = DockStyle.Top;
-            btn3.FlatAppearance.BorderSize = 0;
-            btn3.FlatStyle = FlatStyle.Flat;
-            btn3.ForeColor = Color.White;
-            btn3.Image = (Image)resources.GetObject("btn3.Image");
-            btn3.ImageAlign = ContentAlignment.MiddleLeft;
-            btn3.Location = new Point(0, 269);
-            btn3.Name = "btn3";
-            btn3.Padding = new Padding(20, 0, 0, 0);
-            btn3.Size = new Size(310, 70);
-            btn3.TabIndex = 1;
-            btn3.Tag = "          Button 3";
-            btn3.Text = "          Button 3";
-            btn3.TextAlign = ContentAlignment.MiddleLeft;
-            btn3.UseVisualStyleBackColor = true;
-
-            // 
-            // btn2
-            // 
-            btn2.Dock = DockStyle.Top;
-            btn2.FlatAppearance.BorderSize = 0;
-            btn2.FlatStyle = FlatStyle.Flat;
-            btn2.ForeColor = Color.White;
-            btn2.Image = (Image)resources.GetObject("btn2.Image");
-            btn2.ImageAlign = ContentAlignment.MiddleLeft;
-            btn2.Location = new Point(0, 199);
-            btn2.Name = "btn2";
-            btn2.Padding = new Padding(20, 0, 0, 0);
-            btn2.Size = new Size(310, 70);
-            btn2.TabIndex = 1;
-            btn2.Tag = "          Button 2";
-            btn2.Text = "          Button 2";
-            btn2.TextAlign = ContentAlignment.MiddleLeft;
-            btn2.UseVisualStyleBackColor = true;
-
-            // 
-            // btn1
-            // 
-            btn1.Dock = DockStyle.Top;
-            btn1.FlatAppearance.BorderSize = 0;
-            btn1.FlatStyle = FlatStyle.Flat;
-            btn1.ForeColor = Color.White;
-            btn1.Image = (Image)resources.GetObject("btn1.Image");
-            btn1.ImageAlign = ContentAlignment.MiddleLeft;
-            btn1.Location = new Point(0, 129);
-            btn1.Name = "btn1";
-            btn1.Padding = new Padding(20, 0, 0, 0);
-            btn1.Size = new Size(310, 70);
-            btn1.TabIndex = 1;
-            btn1.Tag = "          Button 1";
-            btn1.Text = "          Button 1";
-            btn1.TextAlign = ContentAlignment.MiddleLeft;
-            btn1.UseVisualStyleBackColor = true;
-
-            // 
-            // btnHome
-            // 
-            btnHome.Dock = DockStyle.Top;
-            btnHome.FlatAppearance.BorderSize = 0;
-            btnHome.FlatStyle = FlatStyle.Flat;
-            btnHome.ForeColor = Color.White;
-            btnHome.Image = (Image)resources.GetObject("btnHome.Image");
-            btnHome.ImageAlign = ContentAlignment.MiddleLeft;
-            btnHome.Location = new Point(0, 59);
-            btnHome.Name = "btnHome";
-            btnHome.Padding = new Padding(20, 0, 0, 0);
-            btnHome.Size = new Size(310, 70);
-            btnHome.TabIndex = 1;
-            btnHome.Tag = "          Home";
-            btnHome.Text = "          Home";
-            btnHome.TextAlign = ContentAlignment.MiddleLeft;
-            btnHome.UseVisualStyleBackColor = true;
-
-            // 
-            // pnlSearch
-            // 
-            pnlSearch.AutoSize = true;
-            pnlSearch.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            pnlSearch.Controls.Add(tbSearch);
-            pnlSearch.Dock = DockStyle.Top;
-            pnlSearch.Location = new Point(0, 70);
-            pnlSearch.Name = "pnlSearch";
-            pnlSearch.Padding = new Padding(10);
-            pnlSearch.Size = new Size(310, 59);
-            pnlSearch.TabIndex = 3;
+            // pnlReports
+            pnlReports = new Panel();
+            pnlReports.Dock = DockStyle.Fill;
+            pnlReports.BackColor = Color.FromArgb(244, 246, 249);
+            pnlReports.Location = new Point(350, 70);
+            pnlReports.Name = "pnlReports";
+            pnlReports.Size = new Size(1624, 1073);
+            pnlReports.TabIndex = 4;
+            pnlReports.Visible = false;
+            Controls.Add(pnlReports);
 
             // 
             // tbSearch
@@ -431,7 +337,7 @@
             panel3.Dock = DockStyle.Top;
             panel3.Location = new Point(0, 0);
             panel3.Name = "panel3";
-            panel3.Size = new Size(310, 70);
+            panel3.Size = new Size(350, 70);
             panel3.TabIndex = 0;
 
             // 
@@ -440,15 +346,17 @@
             btnLogoSmall.Dock = DockStyle.Top;
             btnLogoSmall.FlatAppearance.BorderSize = 0;
             btnLogoSmall.FlatStyle = FlatStyle.Flat;
-            btnLogoSmall.Image = (Image)resources.GetObject("btnLogoSmall.Image");
+            string projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string imagePath = Path.Combine(projectDirectory, "..\\..\\..\\Icons", "icons8-ai-50.png");
+            btnLogoSmall.Image = Image.FromFile(imagePath);
             btnLogoSmall.ImageAlign = ContentAlignment.MiddleLeft;
             btnLogoSmall.Location = new Point(0, 0);
-            btnLogoSmall.Name = "btnLogoSmall";
             btnLogoSmall.Padding = new Padding(20, 0, 0, 0);
-            btnLogoSmall.Size = new Size(310, 70);
+            btnLogoSmall.Name = "btnLogoSmall";
+            btnLogoSmall.Size = new Size(350, 70);
             btnLogoSmall.TabIndex = 1;
-            btnLogoSmall.Tag = "ADMIN";
-            btnLogoSmall.Text = "ADMIN";
+            btnLogoSmall.Tag = "TAKALOBAZAAR'Ô";
+            btnLogoSmall.Text = "TAKALOBAZAAR'Ô";
             btnLogoSmall.UseVisualStyleBackColor = true;
 
             // 
@@ -457,7 +365,7 @@
             panel2.BackColor = Color.White;
             panel2.Controls.Add(btnMenuBar);
             panel2.Dock = DockStyle.Top;
-            panel2.Location = new Point(310, 0);
+            panel2.Location = new Point(350, 0);
             panel2.Name = "panel2";
             panel2.Size = new Size(1624, 70);
             panel2.TabIndex = 1;
@@ -504,6 +412,7 @@
             Controls.Add(panel2);
             Controls.Add(pnlObjects);
             Controls.Add(pnlTypeReport);
+            Controls.Add(pnlDashboard);
             Controls.Add(pnlCategories);
             Controls.Add(pnlExchange);
             Controls.Add(pnlLeft);
@@ -511,12 +420,10 @@
             DoubleBuffered = true;
             Name = "frmMain";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Form1";
+            Text = "TakaloBazaar'ô";
             Load += frmMain_Load;
             pnlLeft.ResumeLayout(false);
             pnlLeft.PerformLayout();
-            pnlSearch.ResumeLayout(false);
-            pnlSearch.PerformLayout();
             panel3.ResumeLayout(false);
             panel2.ResumeLayout(false);
             statusStrip1.ResumeLayout(false);
@@ -534,16 +441,9 @@
         private Panel panel3;
         private Button btnMenuBar;
         private Button btnLogoSmall;
-        private Button btnHome;
         private Button btnTypeReport;
-        private Button btnSettings;
-        private Button btn5;
-        private Button btn4;
-        private Button btn3;
-        private Button btn2;
-        private Button btn1;
+        private Button btnDashboard;
         private Custom_Controls.RoundTB tbSearch;
-        private Panel pnlSearch;
         private Button btnCategories;
         private Panel pnlCategories;
         private Button btnUsers;
@@ -554,6 +454,9 @@
         private Panel pnlTypeReport;
         private Button btnExchange;
         private Panel pnlExchange;
+        private Button btnReports;
+        private Panel pnlReports;
+        private Panel pnlDashboard;
 
         private void HideAllPanels()
         {
@@ -562,6 +465,8 @@
             pnlUsers.Visible = false;
             pnlExchange.Visible = false;
             pnlTypeReport.Visible = false;
+            pnlDashboard.Visible = false;
+            pnlReports.Visible = false;
         }
 
         private void btnCategories_Click(object sender, EventArgs e)
@@ -587,7 +492,6 @@
         {
             HideAllPanels();
             pnlUsers.Visible = true;
-
             pnlUsers.Controls.Clear();
 
             var userListControl = new WinFormsApp.UI.UserListControl();
@@ -602,11 +506,30 @@
             await _typeReportListManager.LoadTypeReportsAsync();
         }
 
+        private async void btnReports_Click(object sender, EventArgs e)
+        {
+            HideAllPanels();
+            pnlReports.Visible = true;
+
+            pnlReports.Controls.Clear();
+            var reportListScreen = new WinFormsApp.UI.ReportListScreen();
+            reportListScreen.Dock = DockStyle.Fill;
+            pnlReports.Controls.Add(reportListScreen);
+        }
+
+
         private async void btnExchange_Click(object sender, EventArgs e)
         {
             HideAllPanels();
             pnlExchange.Visible = true;
             await _exchangeListManager.LoadExchangesAsync();
+        }
+
+        private async void btnDashboard_Click(object sender, EventArgs e)
+        {
+            HideAllPanels();
+            pnlDashboard.Visible = true;
+            _dashboardControl.LoadDashboard();
         }
     }
 }

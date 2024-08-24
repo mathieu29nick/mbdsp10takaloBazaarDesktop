@@ -56,7 +56,7 @@ namespace WinFormsApp.UI
 
             Label titleLabel = new Label
             {
-                Text = "Liste des types de signalements",
+                Text = "Liste des types de signalement",
                 Font = new Font("Arial", 20, FontStyle.Bold),
                 Dock = DockStyle.Top,
                 Height = 90,

@@ -15,7 +15,26 @@ namespace WinFormsApp.Models
         public string Image { get; set; }
         public DateTime Created_At { get; set; }
         public DateTime Updated_At { get; set; }
-        public string Status { get; set; }
+        private string status;
+        public string Status
+        {
+            get
+            {
+                switch (status)
+                {
+                    case "Available":
+                        return "Disponible";
+                    case "Removed":
+                        return "Retiré";
+                    default:
+                        return status;
+                }
+            }
+            set
+            {
+                status = value;
+            }
+        }
         public int UserId { get; set; }
         public int CategoryId { get; set; }
         public DateTime? DeletedAt { get; set; }

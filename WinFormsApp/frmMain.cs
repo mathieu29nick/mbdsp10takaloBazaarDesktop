@@ -49,7 +49,7 @@ namespace WinFormsApp
 
         private void toggleLeftPane()
         {
-            bool shrink = (pnlLeft.Width == 310) ? true : false;
+            bool shrink = (pnlLeft.Width == 350) ? true : false;
 
             foreach (Control c in pnlLeft.Controls)
             {
@@ -59,11 +59,10 @@ namespace WinFormsApp
                 }
             }
 
-            pnlSearch.Visible = !shrink;
             btnLogoSmall.ImageAlign = shrink ? ContentAlignment.MiddleCenter : ContentAlignment.MiddleLeft;
             btnLogoSmall.Text = shrink ? string.Empty : btnLogoSmall.Tag!.ToString();
             btnLogoSmall.Padding = shrink ? new Padding(0) : new Padding(20, 0, 0, 0);
-            pnlLeft.Width = shrink ? 100 : 310;
+            pnlLeft.Width = shrink ? 100 : 350;
         }
 
         private void tbSearch_TextChanged(object sender, EventArgs e)

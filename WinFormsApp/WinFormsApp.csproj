@@ -11,6 +11,11 @@
 
   <ItemGroup>
     <Folder Include="Icons\" />
+    <Folder Include="System\Windows\Forms\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HIC.System.Windows.Forms.DataVisualization" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup>

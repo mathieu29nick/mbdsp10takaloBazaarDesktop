@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Azure;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Threading.Tasks;
@@ -20,6 +21,9 @@ namespace WinFormsApp.UI
 
         private int _currentPage = 1;
         private int _pageSize = 10;
+        private int totalPage = 1;
+        private Button previousButton;
+        private Button nextButton;
 
         public ExchangeListScreen(Panel panel)
         {
@@ -103,14 +107,14 @@ namespace WinFormsApp.UI
                 Margin = new Padding(0)
             };
 
-            Button previousButton = new Button { Text = "Précédent", Width = 150, Height = 50, BackColor = ColorTranslator.FromHtml("#8a8f6a"), ForeColor = Color.White };
-            Button nextButton = new Button { Text = "Suivant", Width = 150, Height = 50, BackColor = ColorTranslator.FromHtml("#8a8f6a"), ForeColor = Color.White };
+            previousButton = new Button { Text = "Précédent", Width = 150, Height = 50, BackColor = ColorTranslator.FromHtml("#8a8f6a"), ForeColor = Color.White };
+            nextButton = new Button { Text = "Suivant", Width = 150, Height = 50, BackColor = ColorTranslator.FromHtml("#8a8f6a"), ForeColor = Color.White };
 
             searchButton.Click += async (sender, e) =>
             {
                 _currentPage = 1;
                 string selectedStatus = statusItems.ContainsKey(statusComboBox.SelectedItem?.ToString()) ? statusItems[statusComboBox.SelectedItem.ToString()] : "";
-                await LoadExchangesAsync(_currentPage, _pageSize, selectedStatus, previousButton, nextButton);
+                await LoadExchangesAsync(_currentPage, _pageSize, selectedStatus);
             };
 
             searchPanel.Controls.Add(statusComboBox);
@@ -134,7 +138,7 @@ namespace WinFormsApp.UI
                 {
                     _currentPage--;
                     string selectedStatus = statusItems.ContainsKey(statusComboBox.SelectedItem?.ToString()) ? statusItems[statusComboBox.SelectedItem.ToString()] : "";
-                    await LoadExchangesAsync(_currentPage, _pageSize, selectedStatus, previousButton, nextButton);
+                    await LoadExchangesAsync(_currentPage, _pageSize, selectedStatus);
                 }
             };
 
@@ -142,7 +146,7 @@ namespace WinFormsApp.UI
             {
                 _currentPage++;
                 string selectedStatus = statusItems.ContainsKey(statusComboBox.SelectedItem?.ToString()) ? statusItems[statusComboBox.SelectedItem.ToString()] : "";
-                await LoadExchangesAsync(_currentPage, _pageSize, selectedStatus, previousButton, nextButton);
+                await LoadExchangesAsync(_currentPage, _pageSize, selectedStatus);
             };
 
             paginationPanel.Controls.Add(previousButton);
@@ -206,7 +210,7 @@ namespace WinFormsApp.UI
             }
         }
         //public async Task LoadObjectsAsync(int page = 1, int limit = 30, string name = null, string description = null, int? categoryId = null, string status = null, Button previousButton = null, Button nextButton = null)
-        public async Task LoadExchangesAsync(int page=1, int limit=10, string status=null, Button previousButton=null, Button nextButton=null)
+        public async Task LoadExchangesAsync(int page=1, int limit=10, string status=null)
         {
             try
             {
@@ -217,16 +221,17 @@ namespace WinFormsApp.UI
                     {"receiver_user_id",userComboBox2.SelectedValue != null && (int)userComboBox2.SelectedValue != -1 ? userComboBox2.SelectedValue.ToString() : "" }
                 };
 
-                List<Exchange> exchanges = await _exchangeService.GetExchangesAsync(page, limit, null, null, filters);
+                ExchangeResponse rep = await _exchangeService.GetExchangesAsync(page, limit, null, null, filters);
+                List<Exchange> liste = rep.Exchanges.ToList();
 
-                if (exchanges == null || exchanges.Count == 0)
+                if (liste == null || liste.Count == 0)
                 {
                     MessageBox.Show("Aucun échange trouvé.");
                     _dataGridView.DataSource = null;
                 }
                 else
                 {
-                    _dataGridView.DataSource = exchanges;
+                    _dataGridView.DataSource = liste;
                 }
 
                 if (previousButton != null)
@@ -236,7 +241,7 @@ namespace WinFormsApp.UI
 
                 if (nextButton != null)
                 {
-                    nextButton.Visible = exchanges.Count == limit;
+                    nextButton.Visible = _currentPage != rep.TotalPages;
                 }
             }
             catch (Exception ex)

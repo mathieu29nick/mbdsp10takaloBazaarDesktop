@@ -19,7 +19,7 @@ namespace WinFormsApp.Services
             _httpClient = HttpClientFactory.Instance;
         }
 
-        public async Task<List<Models.Object>> GetObjectsAsync(int page, int limit, string name = null, string description = null, int? userId = null, int? categoryId = null, string status = null)
+        public async Task<ObjectResponse> GetObjectsAsync(int page, int limit, string name = null, string description = null, int? userId = null, int? categoryId = null, string status = null)
         {
             try
             {
@@ -56,14 +56,15 @@ namespace WinFormsApp.Services
                     {
                         obj.CategoryName = obj.Category?.Name;
                     }
+                    return responseData;
                 }
 
-                return responseData?.Data?.Objects ?? new List<Models.Object>();
+                return new ObjectResponse();
             }
             catch (HttpRequestException e)
             {
                 MessageBox.Show($"Request error: {e.Message}");
-                return new List<Models.Object>();
+                return null;
             }
         }
 
@@ -178,6 +179,38 @@ namespace WinFormsApp.Services
                 return false;
             }
         }
+
+        public async Task<bool> DeleteObjectAsync(int objectId)
+        {
+            try
+            {
+                string url = $"{Configuration.Configuration.URL}/object/{objectId}";
+
+                HttpResponseMessage response = await _httpClient.DeleteAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    string errorResponse = await response.Content.ReadAsStringAsync();
+                    MessageBox.Show($"Erreur lors de la suppression de l'objet : {errorResponse}");
+                    return false;
+                }
+            }
+            catch (HttpRequestException e)
+            {
+                MessageBox.Show($"Erreur de requête : {e.Message}");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur : {ex.Message}");
+                return false;
+            }
+        }
+
 
     }
 

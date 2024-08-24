@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using WinFormsApp.Models;
 using WinFormsApp.Services;
@@ -8,6 +9,7 @@ namespace WinFormsApp.UI.components
     public partial class CategoryModal : Form
     {
         private int? _categoryId;
+
         public CategoryModal(int? categoryId = null, string categoryName = "")
         {
             InitializeComponent();
@@ -98,6 +100,9 @@ namespace WinFormsApp.UI.components
             this.btnSave.TabIndex = 2;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.BackColor = ColorTranslator.FromHtml("#bc8246"); // Submit button background color
+            this.btnSave.ForeColor = Color.White; // White font color
+            this.btnSave.FlatStyle = FlatStyle.Flat;
             this.btnSave.Click += new EventHandler(this.btnSave_Click);
 
             // 
@@ -110,6 +115,9 @@ namespace WinFormsApp.UI.components
             this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "Annuler";
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.BackColor = ColorTranslator.FromHtml("#383838"); // Cancel button background color
+            this.btnCancel.ForeColor = Color.White; // White font color
+            this.btnCancel.FlatStyle = FlatStyle.Flat;
             this.btnCancel.Click += (s, e) => this.Close();
 
             // 

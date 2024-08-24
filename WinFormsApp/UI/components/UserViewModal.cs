@@ -123,9 +123,13 @@ namespace WinFormsApp.UI
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new Size(150, 40);
             this.btnClose.Text = "Fermer";
-            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.UseVisualStyleBackColor = false;
             this.btnClose.Font = new Font("Segoe UI", 12, FontStyle.Bold);
+            this.btnClose.BackColor = ColorTranslator.FromHtml("#383838");
+            this.btnClose.ForeColor = Color.White;
+            this.btnClose.FlatStyle = FlatStyle.Flat;
             this.btnClose.Click += new EventHandler(this.btnClose_Click);
+
 
             // 
             // UserViewModal

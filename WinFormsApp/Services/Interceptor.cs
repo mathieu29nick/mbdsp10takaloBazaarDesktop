@@ -10,7 +10,7 @@ namespace WinFormsApp.Services
     {
 
         public Interceptor(HttpMessageHandler innerHandler) : base(innerHandler)
-        {       
+        {
         }
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)

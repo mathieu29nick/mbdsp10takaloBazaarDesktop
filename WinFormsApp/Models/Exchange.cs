@@ -12,7 +12,30 @@ namespace WinFormsApp.Models
         public int? Id { get; set; }
         public int? ProposerUserId { get; set; }
         public int? ReceiverUserId { get; set; }
-        public string Status { get; set; }
+        private string status;
+        public string Status
+        {
+            get
+            {
+                switch (status)
+                {
+                    case "Accepted":
+                        return "Accepté";
+                    case "Cancelled":
+                        return "Annulé";
+                    case "Refused":
+                        return "Refusé";
+                    case "Proposed":
+                        return "Proposé";
+                    default:
+                        return status;
+                }
+            }
+            set
+            {
+                status = value;
+            }
+        }
         public string Note { get; set; }
         public DateTime? AppointmentDate { get; set; }
         public string MeetingPlace { get; set; }
