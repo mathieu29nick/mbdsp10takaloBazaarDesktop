@@ -60,8 +60,8 @@
             pnlLeft.AutoScroll = true;
             pnlLeft.BackColor = Color.FromArgb(73, 78, 83);
              pnlLeft.Controls.Add(btnLogout);
-            pnlLeft.Controls.Add(btnHelp);
-            pnlLeft.Controls.Add(btnTypeReport);
+/*            pnlLeft.Controls.Add(btnHelp);
+*/            pnlLeft.Controls.Add(btnTypeReport);
             pnlLeft.Controls.Add(btnCategories);
             pnlLeft.Controls.Add(btnUsers);
             pnlLeft.Controls.Add(btnObject);

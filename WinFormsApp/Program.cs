@@ -7,6 +7,7 @@ namespace WinFormsApp
 
         [System.Runtime.InteropServices.DllImport("kernel32.dll")]
         private static extern bool FreeConsole();
+        private const string TokenFilePath = "token.txt";
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
@@ -18,19 +19,28 @@ namespace WinFormsApp
             ApplicationConfiguration.Initialize();
             AllocConsole();
 
-            // Afficher le formulaire de connexion
-            using (var loginForm = new frmLogin())
+            if (File.Exists(TokenFilePath))
             {
-                var result = loginForm.ShowDialog();
-                if (result == DialogResult.OK)
+                Configuration.Configuration.TOKKEN = File.ReadAllText(TokenFilePath);
+                // Token exists, proceed to the main form
+                Application.Run(new frmMain());
+            }
+            else
+            {
+                // Afficher le formulaire de connexion
+                using (var loginForm = new frmLogin())
                 {
-                    // Si la connexion est réussie, lancer le formulaire principal
-                    Application.Run(new frmMain());
-                }
-                else
-                {
-                    // Si la connexion échoue ou si l'utilisateur ferme le formulaire de connexion
-                    Application.Exit();
+                    var result = loginForm.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        // Si la connexion est réussie, lancer le formulaire principal
+                        Application.Run(new frmMain());
+                    }
+                    else
+                    {
+                        // Si la connexion échoue ou si l'utilisateur ferme le formulaire de connexion
+                        Application.Exit();
+                    }
                 }
             }
 

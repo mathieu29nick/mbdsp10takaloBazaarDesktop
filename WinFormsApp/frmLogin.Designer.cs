@@ -34,9 +34,9 @@
             // 
             // pictureBoxLogo
             // 
-            pictureBoxLogo.Location = new Point(780, 60); // Positionnez le logo en haut au centre
+            pictureBoxLogo.Location = new Point(780, 70); // Positionnez le logo en haut au centre
             pictureBoxLogo.Name = "pictureBoxLogo";
-            pictureBoxLogo.Size = new Size(200, 100); // Taille du logo
+            pictureBoxLogo.Size = new Size(200, 50); //taille du logo
             pictureBoxLogo.TabIndex = 0;
             pictureBoxLogo.TabStop = false;
             pictureBoxLogo.SizeMode = PictureBoxSizeMode.StretchImage;

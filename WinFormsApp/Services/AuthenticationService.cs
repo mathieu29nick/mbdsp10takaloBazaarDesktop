@@ -3,8 +3,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using WinFormsApp.Models;
-using WinFormsApp.Configuration;
+using System.IO;
 
 namespace WinFormsApp.Services
 {
@@ -12,62 +11,80 @@ namespace WinFormsApp.Services
     {
         private readonly HttpClient _httpClient;
         private readonly Interceptor _interceptor;
+        private const string TokenFilePath = "token.txt"; // File to store the token
 
         public AuthenticationService(Interceptor interceptor)
         {
             _httpClient = HttpClientFactory.Instance;
             _interceptor = interceptor;
+
+            // Load token from file if it exists
+            if (File.Exists(TokenFilePath))
+            {
+                Configuration.Configuration.TOKKEN = File.ReadAllText(TokenFilePath);
+            }
         }
 
         public async Task<bool> Login(string username, string password)
+        {
+            var url = $"{Configuration.Configuration.URL}/auth/admin/login";
+            var payload = new { username, password };
+            var content = new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
+
+            try
             {
-                var url = $"{Configuration.Configuration.URL}/auth/admin/login";
-                var payload = new { username, password };
-                var content = new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync(url, content);
 
-                try
+                if (response.IsSuccessStatusCode)
                 {
-                    var response = await _httpClient.PostAsync(url, content);
+                    var json = await response.Content.ReadAsStringAsync();
+                    var jsonNode = JsonDocument.Parse(json).RootElement;
 
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var json = await response.Content.ReadAsStringAsync();
-                        var jsonNode = JsonDocument.Parse(json).RootElement;
+                    var token = jsonNode.GetProperty("admin").GetProperty("token").GetString();
 
-                        var token = jsonNode.GetProperty("admin").GetProperty("token").GetString();
-                        _interceptor.SetToken(token);
+                    // Save the token to a file
+                    File.WriteAllText(TokenFilePath, token);
 
-                        // Store the token in the configuration
-                        Configuration.Configuration.TOKKEN = token;
-
-                        return true;
-                    }
-                    else
-                    {
-                        var errorMessage = await ExtractErrorMessage(response);
-                        throw new Exception(errorMessage);
-                    }
+                    Configuration.Configuration.TOKKEN = token;
+                    return true;
                 }
-                catch (Exception ex)
+                else
                 {
-                    throw new Exception($"An error occurred during login: {ex.Message}", ex);
+                    var errorMessage = await ExtractErrorMessage(response);
+                    throw new Exception(errorMessage);
                 }
             }
-
-            public async Task Logout()
+            catch (HttpRequestException ex)
             {
-                var url = $"{Configuration.Configuration.URL}/auth/logout";
-                try
+                var errorMessage = $"Erreur HTTP : {ex.Message}";
+                if (ex.InnerException != null)
                 {
-                    await _httpClient.PostAsync(url, null);
+                    errorMessage += $" Détails : {ex.InnerException.Message}";
                 }
-                finally
+                throw new Exception(errorMessage, ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{ex.Message}", ex);
+            }
+        }
+
+        public async Task Logout()
+        {
+            var url = $"{Configuration.Configuration.URL}/auth/logout";
+            try
+            {
+                await _httpClient.PostAsync(url, null);
+            }
+            finally
+            {
+                Configuration.Configuration.TOKKEN = string.Empty;
+                if (File.Exists(TokenFilePath))
                 {
-                    _interceptor.SetToken(string.Empty);
-                    Configuration.Configuration.TOKKEN = string.Empty;
+                    File.Delete(TokenFilePath);
                 }
             }
-
+        }
 
         private async Task<string> ExtractErrorMessage(HttpResponseMessage response)
         {
