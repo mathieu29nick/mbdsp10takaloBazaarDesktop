@@ -350,8 +350,7 @@ namespace WinFormsApp
             btnLogoSmall.FlatAppearance.BorderSize = 0;
             btnLogoSmall.FlatStyle = FlatStyle.Flat;
             string projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string imagePath = Path.Combine(projectDirectory, "..\\..\\..\\Icons", "icons8-ai-50.png");
-            btnLogoSmall.Image = Image.FromFile(imagePath);
+            btnLogoSmall.Image = WinFormsApp.Properties.Resources.icons8_ai_50;
             btnLogoSmall.ImageAlign = ContentAlignment.MiddleLeft;
             btnLogoSmall.Location = new Point(0, 0);
             btnLogoSmall.Padding = new Padding(20, 0, 0, 0);

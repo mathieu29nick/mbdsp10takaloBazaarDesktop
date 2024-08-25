@@ -63,6 +63,16 @@ namespace WinFormsApp.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_ai_50 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-ai-50", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap logo_no_background {
             get {
                 object obj = ResourceManager.GetObject("logo-no-background", resourceCulture);
